@@ -33,7 +33,6 @@ body {
   min-height: 100vh;
 }
 
-/* ── NOISE TEXTURE OVERLAY ── */
 body::before {
   content: '';
   position: fixed;
@@ -106,22 +105,22 @@ body::before {
   border: 2px dashed var(--border);
   border-radius: var(--r);
   background: var(--surface);
-  padding: 60px 40px;
+  padding: 40px 40px 36px;
   text-align: center;
   transition: border-color 0.2s, background 0.2s;
   cursor: pointer;
   position: relative;
 }
 .upload-zone.drag-over { border-color: var(--accent); background: #fff8f5; }
-.upload-zone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-.upload-icon { font-size: 48px; line-height: 1; margin-bottom: 16px; }
-.upload-zone h2 { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px; color: var(--ink); margin-bottom: 8px; }
+.upload-zone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; z-index: 2; }
+.upload-icon { font-size: 42px; line-height: 1; margin-bottom: 12px; }
+.upload-zone h2 { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 2px; color: var(--ink); margin-bottom: 6px; }
 .upload-zone p { font-size: 13px; color: var(--ink2); line-height: 1.7; }
 .upload-rules {
   display: flex;
   justify-content: center;
   gap: 12px;
-  margin-top: 20px;
+  margin-top: 16px;
   flex-wrap: wrap;
 }
 .upload-rules .rule {
@@ -135,6 +134,138 @@ body::before {
   text-transform: uppercase;
   letter-spacing: 1px;
 }
+
+/* ── FORMAT GUIDE ── */
+.format-guide {
+  margin-top: 28px;
+  border-top: 1px dashed var(--border);
+  padding-top: 22px;
+  position: relative;
+  z-index: 1; /* stays below the file input overlay */
+  pointer-events: none; /* let clicks pass through to file input */
+}
+.format-guide-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--ink3);
+  font-weight: 700;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.format-guide-label::before,
+.format-guide-label::after {
+  content: '';
+  flex: 1;
+  max-width: 80px;
+  height: 1px;
+  background: var(--border);
+}
+
+/* Excel mock table */
+.excel-mock {
+  display: inline-block;
+  border: 1px solid #c0bdb5;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(26,22,16,0.10);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  background: #fff;
+  text-align: left;
+}
+.excel-meta {
+  background: #f0ede6;
+  padding: 7px 14px;
+  font-size: 10px;
+  color: var(--ink2);
+  border-bottom: 1px solid #d8d2c4;
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.excel-meta .em-row { display: flex; align-items: center; gap: 6px; }
+.excel-meta .em-key {
+  font-weight: 700;
+  color: var(--ink);
+  font-family: 'Outfit', sans-serif;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.excel-meta .em-val { color: var(--accent2); font-weight: 600; }
+.excel-meta .em-note { color: var(--accent); font-style: italic; font-family: 'Outfit', sans-serif; }
+
+table.xls {
+  border-collapse: collapse;
+  min-width: 520px;
+}
+table.xls th {
+  background: #e8e3d8;
+  color: #6b6355;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border: 1px solid #ccc8be;
+  text-align: center;
+  letter-spacing: 1px;
+  font-family: 'Outfit', sans-serif;
+}
+table.xls .row-num {
+  background: #f0ede6;
+  color: #a09880;
+  font-size: 10px;
+  border: 1px solid #ccc8be;
+  padding: 4px 8px;
+  text-align: center;
+  min-width: 28px;
+}
+table.xls .header-row td {
+  background: #217346;
+  color: #fff;
+  font-weight: 700;
+  font-size: 11px;
+  padding: 6px 14px;
+  border: 1px solid #1a5c38;
+  white-space: nowrap;
+}
+table.xls .header-row .row-num {
+  background: #f0ede6;
+  color: #a09880;
+  border: 1px solid #ccc8be;
+}
+table.xls .date-col {
+  background: #fff3e0;
+  color: #7b3f00;
+  font-weight: 600;
+  border: 1px solid #ccc8be;
+  padding: 4px 12px;
+  white-space: nowrap;
+}
+table.xls .val-col {
+  color: #1a1610;
+  border: 1px solid #ddd9d0;
+  padding: 4px 12px;
+  text-align: right;
+}
+table.xls tr:nth-child(even) .val-col { background: #fafaf7; }
+table.xls tr:nth-child(odd)  .val-col { background: #fff; }
+table.xls .ellipsis-col {
+  color: #a09880;
+  text-align: center;
+  border: 1px solid #ddd9d0;
+  padding: 4px 10px;
+  font-size: 13px;
+  background: #fafaf7;
+}
+
+/* Column colour badges */
+.col-a { color: #7b3f00; font-weight: 700; }
+.col-b { color: #1a5c38; font-weight: 700; }
+.col-other { color: var(--accent2); font-weight: 700; }
 
 /* ── ERROR BOX ── */
 .error-box {
@@ -158,117 +289,34 @@ body::before {
   border-bottom: 2px solid var(--ink);
   padding-bottom: 10px;
 }
-.section-head .num {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 42px;
-  color: var(--accent);
-  line-height: 1;
-}
-.section-head h2 {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 26px;
-  letter-spacing: 2px;
-  color: var(--ink);
-}
-.section-head .sub {
-  font-size: 12px;
-  color: var(--ink3);
-  margin-left: auto;
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 500;
-}
+.section-head .num { font-family: 'Bebas Neue', sans-serif; font-size: 42px; color: var(--accent); line-height: 1; }
+.section-head h2 { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 2px; color: var(--ink); }
+.section-head .sub { font-size: 12px; color: var(--ink3); margin-left: auto; font-family: 'JetBrains Mono', monospace; font-weight: 500; }
 
 /* ── SERIES CHIPS ── */
 .series-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
-.chip {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
-  border-radius: 4px;
-  font-size: 12px;
-  font-weight: 600;
-  color: #fff;
-  letter-spacing: 0.5px;
-}
+.chip { display: flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; color: #fff; letter-spacing: 0.5px; }
 .chip-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.6); }
 
 /* ── STATS BAR ── */
-.stats-bar {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 12px;
-  margin-bottom: 32px;
-}
-.stat-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 14px 16px;
-}
+.stats-bar { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-bottom: 32px; }
+.stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 14px 16px; }
 .stat-card .s-label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--ink3); font-weight: 600; margin-bottom: 4px; }
 .stat-card .s-val { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 500; color: var(--ink); }
 .stat-card .s-name { font-size: 10px; color: var(--ink2); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 /* ── CORRELATION MATRIX ── */
 .matrix-wrap { overflow-x: auto; }
-table.corr-tbl {
-  border-collapse: separate;
-  border-spacing: 3px;
-  font-family: 'JetBrains Mono', monospace;
-}
-table.corr-tbl th {
-  font-family: 'Outfit', sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--ink2);
-  padding: 6px 8px;
-  text-align: center;
-  white-space: nowrap;
-}
-table.corr-tbl td {
-  padding: 10px 14px;
-  text-align: center;
-  border-radius: 4px;
-  font-size: 13px;
-  font-weight: 500;
-  min-width: 72px;
-  cursor: default;
-  transition: transform 0.12s, box-shadow 0.12s;
-}
+table.corr-tbl { border-collapse: separate; border-spacing: 3px; font-family: 'JetBrains Mono', monospace; }
+table.corr-tbl th { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--ink2); padding: 6px 8px; text-align: center; white-space: nowrap; }
+table.corr-tbl td { padding: 10px 14px; text-align: center; border-radius: 4px; font-size: 13px; font-weight: 500; min-width: 72px; cursor: default; transition: transform 0.12s, box-shadow 0.12s; }
 table.corr-tbl td:hover { transform: scale(1.12); box-shadow: 0 4px 12px var(--shadow); z-index: 5; position: relative; }
-table.corr-tbl .row-lbl {
-  font-family: 'Outfit', sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  background: transparent !important;
-  color: var(--ink);
-  text-align: left;
-  padding-right: 14px;
-  white-space: nowrap;
-  min-width: 120px;
-}
+table.corr-tbl .row-lbl { font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 700; background: transparent !important; color: var(--ink); text-align: left; padding-right: 14px; white-space: nowrap; min-width: 120px; }
 
-/* ── BEST PAIRS GRID ── */
+/* ── BEST PAIRS ── */
 .pairs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
-.pair-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 20px;
-  position: relative;
-  overflow: hidden;
-  transition: box-shadow 0.2s;
-}
+.pair-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 20px; position: relative; overflow: hidden; transition: box-shadow 0.2s; }
 .pair-card:hover { box-shadow: 0 6px 24px var(--shadow); }
-.pair-card::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 3px;
-}
 .pair-card .pc-grade { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 1px; color: var(--ink); margin-bottom: 2px; }
 .pair-card .pc-arrow { font-size: 10px; color: var(--ink3); text-transform: uppercase; letter-spacing: 2px; margin: 6px 0; }
 .pair-card .pc-match { font-size: 13px; font-weight: 700; margin-bottom: 14px; }
@@ -276,302 +324,74 @@ table.corr-tbl .row-lbl {
 .pair-card .pc-label { font-size: 10px; color: var(--ink3); text-transform: uppercase; letter-spacing: 2px; font-weight: 600; }
 .pair-card .pc-bar-bg { background: var(--surface2); border-radius: 2px; height: 4px; margin: 10px 0 6px; overflow: hidden; }
 .pair-card .pc-bar { height: 100%; border-radius: 2px; transition: width 1s ease; }
-.pair-card .pc-badge {
-  position: absolute; top: 14px; right: 14px;
-  font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
-  padding: 3px 8px; border-radius: 2px;
-}
+.pair-card .pc-badge { position: absolute; top: 14px; right: 14px; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; padding: 3px 8px; border-radius: 2px; }
 .pair-card .pc-second { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 11px; color: var(--ink2); }
 
-/* ── SCATTER SECTION ── */
-.scatter-controls {
-  display: flex;
-  gap: 14px;
-  align-items: center;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 16px 20px;
-}
+/* ── SCATTER ── */
+.scatter-controls { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; margin-bottom: 20px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 16px 20px; }
 .scatter-controls label { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--ink3); font-weight: 600; }
-.scatter-controls select {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  color: var(--ink);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  padding: 8px 12px;
-  border-radius: 4px;
-  outline: none;
-  cursor: pointer;
-}
-.live-r {
-  margin-left: auto;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 32px;
-  letter-spacing: 1px;
-  line-height: 1;
-}
-.live-r small {
-  display: block;
-  font-family: 'Outfit', sans-serif;
-  font-size: 10px;
-  color: var(--ink3);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  font-weight: 600;
-}
+.scatter-controls select { background: var(--bg); border: 1px solid var(--border); color: var(--ink); font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 8px 12px; border-radius: 4px; outline: none; cursor: pointer; }
+.live-r { margin-left: auto; font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 1px; line-height: 1; }
+.live-r small { display: block; font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--ink3); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
 
-/* ── SEASONALITY BOX ── */
-.season-box {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 24px;
-  margin-bottom: 8px;
-}
-.season-controls {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
-  margin-bottom: 22px;
-}
+/* ── SEASONALITY ── */
+.season-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 24px; margin-bottom: 8px; }
+.season-controls { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 22px; }
 .sc-group { display: flex; align-items: center; gap: 8px; }
-.sc-label {
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: var(--ink3);
-  font-weight: 700;
-}
-.season-controls select {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  color: var(--ink);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  padding: 7px 12px;
-  border-radius: 4px;
-  outline: none;
-  cursor: pointer;
-  min-width: 160px;
-}
+.sc-label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--ink3); font-weight: 700; }
+.season-controls select { background: var(--bg); border: 1px solid var(--border); color: var(--ink); font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 7px 12px; border-radius: 4px; outline: none; cursor: pointer; min-width: 160px; }
 .season-controls select:focus { border-color: var(--accent); }
-.sc-note {
-  font-size: 11px;
-  color: var(--ink3);
-  font-style: italic;
-  margin-left: auto;
-}
-
-/* KPI row */
-.season-kpis {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 12px;
-  margin-bottom: 24px;
-}
-.kpi-card {
-  border-radius: var(--r);
-  padding: 14px 16px;
-  border: 1px solid var(--border);
-  background: var(--bg);
-}
-.kpi-card .kpi-label {
-  font-size: 9px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: var(--ink3);
-  font-weight: 700;
-  margin-bottom: 5px;
-}
-.kpi-card .kpi-val {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 26px;
-  line-height: 1;
-  color: var(--ink);
-}
-.kpi-card .kpi-sub {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  color: var(--ink3);
-  margin-top: 3px;
-}
+.sc-note { font-size: 11px; color: var(--ink3); font-style: italic; margin-left: auto; }
+.season-kpis { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-bottom: 24px; }
+.kpi-card { border-radius: var(--r); padding: 14px 16px; border: 1px solid var(--border); background: var(--bg); }
+.kpi-card .kpi-label { font-size: 9px; text-transform: uppercase; letter-spacing: 2px; color: var(--ink3); font-weight: 700; margin-bottom: 5px; }
+.kpi-card .kpi-val { font-family: 'Bebas Neue', sans-serif; font-size: 26px; line-height: 1; color: var(--ink); }
+.kpi-card .kpi-sub { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink3); margin-top: 3px; }
 .kpi-up   { border-left: 3px solid #15803d; }
 .kpi-down { border-left: 3px solid #b91c1c; }
 .kpi-neu  { border-left: 3px solid var(--gold); }
 .kpi-mode { border-left: 3px solid var(--accent2); }
-
-/* Seasonality table */
 .season-table-wrap { overflow-x: auto; }
-.season-tbl-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 16px;
-  letter-spacing: 2px;
-  color: var(--ink);
-  margin-bottom: 12px;
-}
+.season-tbl-title { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 2px; color: var(--ink); margin-bottom: 12px; }
 .season-matrix-wrap { overflow-x: auto; }
-table.season-tbl {
-  border-collapse: separate;
-  border-spacing: 2px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  min-width: 100%;
-}
-table.season-tbl th {
-  font-family: 'Outfit', sans-serif;
-  font-size: 9px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--ink2);
-  padding: 5px 8px;
-  text-align: center;
-  white-space: nowrap;
-  background: var(--surface2);
-  border-radius: 3px;
-}
-table.season-tbl th.active-month {
-  background: var(--ink);
-  color: #fff;
-}
-table.season-tbl td {
-  padding: 7px 10px;
-  text-align: center;
-  border-radius: 3px;
-  white-space: nowrap;
-  min-width: 80px;
-}
-table.season-tbl .yr-lbl {
-  font-family: 'Outfit', sans-serif;
-  font-weight: 700;
-  font-size: 11px;
-  color: var(--ink);
-  background: var(--surface2) !important;
-  border-radius: 3px;
-  text-align: left;
-  padding-left: 10px;
-}
-table.season-tbl .avg-row td {
-  font-weight: 700;
-  font-size: 11px;
-}
-table.season-tbl .avg-row .yr-lbl {
-  background: var(--ink) !important;
-  color: #fff;
-}
+table.season-tbl { border-collapse: separate; border-spacing: 2px; font-family: 'JetBrains Mono', monospace; font-size: 11px; min-width: 100%; }
+table.season-tbl th { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--ink2); padding: 5px 8px; text-align: center; white-space: nowrap; background: var(--surface2); border-radius: 3px; }
+table.season-tbl th.active-month { background: var(--ink); color: #fff; }
+table.season-tbl td { padding: 7px 10px; text-align: center; border-radius: 3px; white-space: nowrap; min-width: 80px; }
+table.season-tbl .yr-lbl { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 11px; color: var(--ink); background: var(--surface2) !important; border-radius: 3px; text-align: left; padding-left: 10px; }
+table.season-tbl .avg-row td { font-weight: 700; font-size: 11px; }
+table.season-tbl .avg-row .yr-lbl { background: var(--ink) !important; color: #fff; }
 
 /* ── AXIS TOGGLE ── */
-.axis-toggle-bar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 14px;
-  align-items: center;
-}
-.axis-toggle-bar .toggle-label {
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: var(--ink3);
-  font-weight: 700;
-  margin-right: 4px;
-}
-.axis-btn {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  padding: 5px 12px;
-  border-radius: 4px;
-  border: 1.5px solid var(--border);
-  background: var(--surface2);
-  cursor: pointer;
-  font-family: 'Outfit', sans-serif;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--ink2);
-  transition: all 0.15s;
-  user-select: none;
-}
+.axis-toggle-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; align-items: center; }
+.axis-toggle-bar .toggle-label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--ink3); font-weight: 700; margin-right: 4px; }
+.axis-btn { display: flex; align-items: center; gap: 7px; padding: 5px 12px; border-radius: 4px; border: 1.5px solid var(--border); background: var(--surface2); cursor: pointer; font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 600; color: var(--ink2); transition: all 0.15s; user-select: none; }
 .axis-btn:hover { border-color: var(--ink2); }
-.axis-btn.on-right {
-  border-color: transparent;
-  color: #fff;
-}
-.axis-btn .ab-dot {
-  width: 9px; height: 9px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-.axis-btn .ab-axis-tag {
-  font-size: 9px;
-  padding: 1px 5px;
-  border-radius: 2px;
-  font-weight: 700;
-  letter-spacing: 1px;
-}
+.axis-btn.on-right { border-color: transparent; color: #fff; }
+.axis-btn .ab-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+.axis-btn .ab-axis-tag { font-size: 9px; padding: 1px 5px; border-radius: 2px; font-weight: 700; letter-spacing: 1px; }
 .ab-axis-tag.left  { background: rgba(0,0,0,0.12); color: inherit; }
 .ab-axis-tag.right { background: rgba(255,255,255,0.25); color: #fff; }
-.auto-warn {
-  font-size: 10px;
-  color: var(--accent);
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 3px;
-  background: rgba(200,57,10,0.08);
-  border: 1px solid rgba(200,57,10,0.2);
-  display: none;
-}
+.auto-warn { font-size: 10px; color: var(--accent); font-weight: 600; padding: 4px 10px; border-radius: 3px; background: rgba(200,57,10,0.08); border: 1px solid rgba(200,57,10,0.2); display: none; }
 
-/* ── TIME SERIES CHART ── */
-.chart-box {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 24px;
-}
-.chart-box .chart-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 18px;
-  letter-spacing: 2px;
-  color: var(--ink);
-  margin-bottom: 16px;
-}
+/* ── CHART BOX ── */
+.chart-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 24px; }
+.chart-box .chart-title { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 2px; color: var(--ink); margin-bottom: 16px; }
 
 /* ── LEGEND NOTE ── */
-.legend-note {
-  background: var(--surface2);
-  border-radius: var(--r);
-  padding: 12px 18px;
-  font-size: 11px;
-  color: var(--ink2);
-  margin-top: 14px;
-  line-height: 1.8;
-  font-family: 'JetBrains Mono', monospace;
-}
+.legend-note { background: var(--surface2); border-radius: var(--r); padding: 12px 18px; font-size: 11px; color: var(--ink2); margin-top: 14px; line-height: 1.8; font-family: 'JetBrains Mono', monospace; }
 .legend-note b { color: var(--ink); }
 
 /* ── HIDDEN / LOADING ── */
 #dashboard { display: none; }
-.loading {
-  text-align: center;
-  padding: 40px;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 22px;
-  letter-spacing: 3px;
-  color: var(--ink3);
-  display: none;
-}
+.loading { text-align: center; padding: 40px; font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 3px; color: var(--ink3); display: none; }
 
 @media (max-width: 700px) {
   .wrapper { padding: 20px 16px; }
   .masthead { padding: 0 20px; }
   .scatter-controls { flex-direction: column; align-items: flex-start; }
   .live-r { margin-left: 0; }
+  table.xls { min-width: 340px; }
 }
 </style>
 </head>
@@ -606,22 +426,117 @@ table.season-tbl .avg-row .yr-lbl {
     <input type="file" id="fileInput" accept=".csv,.xlsx,.xls">
     <div class="upload-icon">📂</div>
     <h2>Drop your file here or click to browse</h2>
-    <p>Upload an Excel or CSV file with Date in column 1<br>and your time series in columns 2 onward.</p>
+    <p>Upload an Excel or CSV file with Date in column 1 and your time series in columns 2 onward.</p>
     <div class="upload-rules">
       <div class="rule">✓ Min 3 series</div>
       <div class="rule">✓ Max 12 series</div>
       <div class="rule">✓ .xlsx or .csv</div>
       <div class="rule">✓ Row 1 = headers</div>
     </div>
-  </div>
+
+    <!-- ── FORMAT GUIDE ── -->
+    <div class="format-guide">
+      <div class="format-guide-label">Required File Format</div>
+      <div class="excel-mock">
+
+        <!-- Meta info bar (mimics the note above the table in your screenshot) -->
+        <div class="excel-meta">
+          <div class="em-row"><span class="em-key">Format</span><span class="em-val">Column A — Date &nbsp;|&nbsp; Columns B to M — Product / Series Names</span></div>
+          <div class="em-row"><span class="em-key">Note</span><span class="em-note">Min 3 &nbsp;·&nbsp; Max 12 Products / Series</span></div>
+        </div>
+
+        <!-- Excel-style table -->
+        <table class="xls">
+          <thead>
+            <tr>
+              <th style="min-width:28px"></th>
+              <th class="col-a">A</th>
+              <th class="col-b">B</th>
+              <th class="col-other">C</th>
+              <th class="col-other">D</th>
+              <th class="col-other">…M</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Header row (row 1) -->
+            <tr class="header-row">
+              <td class="row-num">1</td>
+              <td>Date</td>
+              <td>Product Name-1</td>
+              <td>Product Name-2</td>
+              <td>Product Name-3</td>
+              <td>…up to 12</td>
+            </tr>
+            <!-- Data rows -->
+            <tr>
+              <td class="row-num">2</td>
+              <td class="date-col">Jan-21</td>
+              <td class="val-col">8.48</td>
+              <td class="val-col">621.01</td>
+              <td class="val-col">8.00</td>
+              <td class="ellipsis-col">…</td>
+            </tr>
+            <tr>
+              <td class="row-num">3</td>
+              <td class="date-col">Feb-21</td>
+              <td class="val-col">9.49</td>
+              <td class="val-col">648.39</td>
+              <td class="val-col">9.06</td>
+              <td class="ellipsis-col">…</td>
+            </tr>
+            <tr>
+              <td class="row-num">4</td>
+              <td class="date-col">Mar-21</td>
+              <td class="val-col">10.10</td>
+              <td class="val-col">721.23</td>
+              <td class="val-col">9.60</td>
+              <td class="ellipsis-col">…</td>
+            </tr>
+            <tr>
+              <td class="row-num">5</td>
+              <td class="date-col">Apr-21</td>
+              <td class="val-col">9.96</td>
+              <td class="val-col">686.44</td>
+              <td class="val-col">9.42</td>
+              <td class="ellipsis-col">…</td>
+            </tr>
+            <tr>
+              <td class="row-num">6</td>
+              <td class="date-col">May-21</td>
+              <td class="val-col">10.60</td>
+              <td class="val-col">715.07</td>
+              <td class="val-col">10.13</td>
+              <td class="ellipsis-col">…</td>
+            </tr>
+            <tr>
+              <td class="row-num">7</td>
+              <td class="date-col">Jun-21</td>
+              <td class="val-col">11.36</td>
+              <td class="val-col">731.61</td>
+              <td class="val-col">11.05</td>
+              <td class="ellipsis-col">…</td>
+            </tr>
+            <tr>
+              <td class="row-num" style="color:#a09880;font-style:italic">…</td>
+              <td class="date-col" style="color:#a09880;font-style:italic">…</td>
+              <td class="val-col" style="color:#a09880">…</td>
+              <td class="val-col" style="color:#a09880">…</td>
+              <td class="val-col" style="color:#a09880">…</td>
+              <td class="ellipsis-col">…</td>
+            </tr>
+          </tbody>
+        </table>
+      </div><!-- /excel-mock -->
+    </div><!-- /format-guide -->
+
+  </div><!-- /upload-zone -->
 
   <div class="error-box" id="errorBox"></div>
   <div class="loading" id="loading">⏳ Computing correlations…</div>
 
-  <!-- DASHBOARD (hidden until file loaded) -->
+  <!-- DASHBOARD -->
   <div id="dashboard">
 
-    <!-- SERIES LEGEND -->
     <div class="section-head">
       <div class="num">01</div>
       <h2>Detected Series</h2>
@@ -629,7 +544,6 @@ table.season-tbl .avg-row .yr-lbl {
     </div>
     <div class="series-chips" id="seriesChips"></div>
 
-    <!-- DEBUG: parsed-data preview so user can verify date↔value alignment -->
     <details id="debugBox" style="margin:16px 0 22px;background:#fff8e1;border:1px solid #f0c674;border-radius:6px;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;">
       <summary style="cursor:pointer;font-weight:700;color:#92400e;letter-spacing:1px;text-transform:uppercase;">🔧 Parsed Data Preview (click to expand) — verify dates align with your file</summary>
       <div style="margin-top:10px;color:#555;font-size:10px;line-height:1.5;">
@@ -641,14 +555,12 @@ table.season-tbl .avg-row .yr-lbl {
       <div style="margin-top:8px;font-size:9px;color:#888;">Tool version: <b>v5 — raw-excel-serial · 2026-04-29</b></div>
     </details>
 
-    <!-- SUMMARY STATS + SEASONALITY -->
     <div class="section-head">
       <div class="num">02</div>
       <h2>Summary Statistics &amp; Monthly Seasonality</h2>
       <div class="sub">MEAN · MEDIAN · MIN · MAX</div>
     </div>
 
-    <!-- Overall stat cards -->
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap;">
       <span style="font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--ink3);font-weight:700;">Filter Year</span>
       <select id="statsYearSel" style="background:var(--bg);border:1px solid var(--border);color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:12px;padding:7px 12px;border-radius:4px;outline:none;cursor:pointer;">
@@ -658,48 +570,25 @@ table.season-tbl .avg-row .yr-lbl {
     </div>
     <div class="stats-bar" id="statsBar"></div>
 
-    <!-- Seasonality deep-dive -->
     <div class="season-box" id="seasonBox">
       <div class="season-controls">
-        <div class="sc-group">
-          <span class="sc-label">Series</span>
-          <select id="seasonSeriesSel"></select>
-        </div>
+        <div class="sc-group"><span class="sc-label">Series</span><select id="seasonSeriesSel"></select></div>
         <div class="sc-group">
           <span class="sc-label">Month</span>
           <select id="seasonMonthSel">
-            <option value="0">January</option>
-            <option value="1">February</option>
-            <option value="2">March</option>
-            <option value="3">April</option>
-            <option value="4">May</option>
-            <option value="5">June</option>
-            <option value="6">July</option>
-            <option value="7">August</option>
-            <option value="8">September</option>
-            <option value="9">October</option>
-            <option value="10">November</option>
-            <option value="11">December</option>
+            <option value="0">January</option><option value="1">February</option><option value="2">March</option>
+            <option value="3">April</option><option value="4">May</option><option value="5">June</option>
+            <option value="6">July</option><option value="7">August</option><option value="8">September</option>
+            <option value="9">October</option><option value="10">November</option><option value="11">December</option>
           </select>
         </div>
-        <div class="sc-group">
-          <span class="sc-label">Year</span>
-          <select id="seasonYearSel">
-            <option value="all">All Years</option>
-          </select>
-        </div>
+        <div class="sc-group"><span class="sc-label">Year</span><select id="seasonYearSel"><option value="all">All Years</option></select></div>
         <div class="sc-note">← Filter by series, month or year to explore seasonality</div>
       </div>
-
-      <!-- KPI row -->
       <div class="season-kpis" id="seasonKpis"></div>
-
-      <!-- Monthly heatmap table (all 12 months × all years) -->
       <div class="season-table-wrap">
         <div class="season-tbl-title" id="seasonTblTitle">Monthly Seasonality — All Years</div>
-        <div class="season-matrix-wrap">
-          <table class="season-tbl" id="seasonTbl"></table>
-        </div>
+        <div class="season-matrix-wrap"><table class="season-tbl" id="seasonTbl"></table></div>
         <div class="legend-note" style="margin-top:10px">
           <b>↑ Green</b> = month increased vs prior month &nbsp;|&nbsp;
           <b>↓ Red</b> = decreased &nbsp;|&nbsp;
@@ -707,13 +596,9 @@ table.season-tbl .avg-row .yr-lbl {
           Bottom row = <b>avg change per month across all years</b>
         </div>
       </div>
-
-      <!-- Year-over-Year change table: each cell compares value to same month one year earlier -->
       <div class="season-table-wrap" style="margin-top:32px;">
         <div class="season-tbl-title" id="yoyTblTitle">Year-over-Year Change — All Years</div>
-        <div class="season-matrix-wrap">
-          <table class="season-tbl" id="yoyTbl"></table>
-        </div>
+        <div class="season-matrix-wrap"><table class="season-tbl" id="yoyTbl"></table></div>
         <div class="legend-note" style="margin-top:10px">
           <b>↑ Green</b> = month higher than same month one year earlier &nbsp;|&nbsp;
           <b>↓ Red</b> = lower &nbsp;|&nbsp;
@@ -723,7 +608,6 @@ table.season-tbl .avg-row .yr-lbl {
       </div>
     </div>
 
-    <!-- TIME SERIES CHART -->
     <div class="section-head">
       <div class="num">03</div>
       <h2>Price Trends</h2>
@@ -738,16 +622,13 @@ table.season-tbl .avg-row .yr-lbl {
       <canvas id="timeChart" height="100"></canvas>
     </div>
 
-    <!-- CORRELATION MATRIX -->
     <div class="section-head">
       <div class="num">04</div>
       <h2>Correlation Matrix</h2>
       <div class="sub">PEARSON r · ALL PAIRS</div>
     </div>
     <div class="chart-box">
-      <div class="matrix-wrap">
-        <table class="corr-tbl" id="corrTable"></table>
-      </div>
+      <div class="matrix-wrap"><table class="corr-tbl" id="corrTable"></table></div>
       <div class="legend-note">
         <b>Reading guide:</b> &nbsp;
         ■ Dark green ≥ 0.90 Very strong &nbsp;|&nbsp;
@@ -758,7 +639,6 @@ table.season-tbl .avg-row .yr-lbl {
       </div>
     </div>
 
-    <!-- BEST PAIRS -->
     <div class="section-head">
       <div class="num">05</div>
       <h2>Best Pair per Series</h2>
@@ -766,1105 +646,445 @@ table.season-tbl .avg-row .yr-lbl {
     </div>
     <div class="pairs-grid" id="pairsGrid"></div>
 
-    <!-- SCATTER EXPLORER -->
     <div class="section-head">
       <div class="num">06</div>
       <h2>Scatter Explorer</h2>
       <div class="sub">SELECT ANY TWO SERIES</div>
     </div>
     <div class="scatter-controls">
-      <label>X-Axis</label>
-      <select id="xSel"></select>
-      <label>Y-Axis</label>
-      <select id="ySel"></select>
+      <label>X-Axis</label><select id="xSel"></select>
+      <label>Y-Axis</label><select id="ySel"></select>
       <div class="live-r" id="liveR">r = —<small>Pearson Correlation</small></div>
     </div>
-    <div class="chart-box">
-      <canvas id="scatterChart" height="80"></canvas>
-    </div>
+    <div class="chart-box"><canvas id="scatterChart" height="80"></canvas></div>
 
   </div><!-- /dashboard -->
 </div>
 
 <script>
-// ── PALETTE ──────────────────────────────────────────────────────────────────
 const PALETTE = [
   "#c8390a","#2855a0","#1a7a4a","#d4a820","#7b2d8b",
   "#1a7a7a","#8b4513","#b5294e","#1a4a8b","#4a7a1a",
   "#8b6914","#555555"
 ];
 
-// ── PEARSON ───────────────────────────────────────────────────────────────────
 function pearson(a, b) {
   const n = a.length;
-  const ma = a.reduce((s,v)=>s+v,0)/n;
-  const mb = b.reduce((s,v)=>s+v,0)/n;
-  let num=0, da=0, db=0;
-  for(let i=0;i<n;i++){
-    const ea=a[i]-ma, eb=b[i]-mb;
-    num+=ea*eb; da+=ea*ea; db+=eb*eb;
-  }
+  const ma = a.reduce((s,v)=>s+v,0)/n, mb = b.reduce((s,v)=>s+v,0)/n;
+  let num=0,da=0,db=0;
+  for(let i=0;i<n;i++){const ea=a[i]-ma,eb=b[i]-mb;num+=ea*eb;da+=ea*ea;db+=eb*eb;}
   if(da===0||db===0) return 0;
   return num/Math.sqrt(da*db);
 }
 
-// ── COLOR SCALE (warm: ink → gold → green) ──────────────────────────────────
 function corrColor(r) {
-  // -1 → red, 0 → warm grey, +1 → deep green
-  if(r < 0) {
-    const t = (r+1); // 0..1
-    return `hsl(${Math.round(8*t)},${Math.round(60+30*t)}%,${Math.round(40+15*t)}%)`;
-  }
-  // 0..1 → yellow → green
-  const h = Math.round(50 + 70*r); // 50..120
-  const s = Math.round(50 + 30*r);
-  const l = Math.round(62 - 22*r);
+  if(r<0){const t=r+1;return `hsl(${Math.round(8*t)},${Math.round(60+30*t)}%,${Math.round(40+15*t)}%)`;}
+  const h=Math.round(50+70*r),s=Math.round(50+30*r),l=Math.round(62-22*r);
   return `hsl(${h},${s}%,${l}%)`;
 }
-function textOnCorr(r) { return Math.abs(r)>0.35 ? '#fff' : '#444'; }
+function textOnCorr(r){return Math.abs(r)>0.35?'#fff':'#444';}
 
-// ── BADGE ─────────────────────────────────────────────────────────────────────
-function badge(r) {
-  if(r>=0.90) return {label:'Very Strong', bg:'#15803d', tc:'#fff'};
-  if(r>=0.70) return {label:'Strong',      bg:'#2563eb', tc:'#fff'};
-  if(r>=0.50) return {label:'Moderate',    bg:'#ca8a04', tc:'#fff'};
-  return              {label:'Weak',        bg:'#b91c1c', tc:'#fff'};
+function badge(r){
+  if(r>=0.90)return{label:'Very Strong',bg:'#15803d',tc:'#fff'};
+  if(r>=0.70)return{label:'Strong',bg:'#2563eb',tc:'#fff'};
+  if(r>=0.50)return{label:'Moderate',bg:'#ca8a04',tc:'#fff'};
+  return{label:'Weak',bg:'#b91c1c',tc:'#fff'};
 }
 
-// ── STATE ─────────────────────────────────────────────────────────────────────
-let seriesNames = [], seriesData = [], dateLabels = [];
-let dateParsed = []; // { year, month } for each row, parsed at load time
-let dateRawList = []; // original raw cell value, for debug
-let corrMatrix = [];
-let timeChartInst, scatterChartInst;
+let seriesNames=[],seriesData=[],dateLabels=[];
+let dateParsed=[],dateRawList=[],corrMatrix=[];
+let timeChartInst,scatterChartInst;
 
-// ── FILE INPUT ────────────────────────────────────────────────────────────────
-const fileInput  = document.getElementById('fileInput');
-const uploadZone = document.getElementById('uploadZone');
+const fileInput=document.getElementById('fileInput');
+const uploadZone=document.getElementById('uploadZone');
+uploadZone.addEventListener('dragover',e=>{e.preventDefault();uploadZone.classList.add('drag-over');});
+uploadZone.addEventListener('dragleave',()=>uploadZone.classList.remove('drag-over'));
+uploadZone.addEventListener('drop',e=>{e.preventDefault();uploadZone.classList.remove('drag-over');if(e.dataTransfer.files[0])processFile(e.dataTransfer.files[0]);});
+fileInput.addEventListener('change',()=>{if(fileInput.files[0])processFile(fileInput.files[0]);});
 
-uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
-uploadZone.addEventListener('dragleave', ()=> uploadZone.classList.remove('drag-over'));
-uploadZone.addEventListener('drop', e => {
-  e.preventDefault();
-  uploadZone.classList.remove('drag-over');
-  if(e.dataTransfer.files[0]) processFile(e.dataTransfer.files[0]);
-});
-fileInput.addEventListener('change', ()=> { if(fileInput.files[0]) processFile(fileInput.files[0]); });
+function showError(msg){const b=document.getElementById('errorBox');b.textContent='⚠ '+msg;b.style.display='block';}
+function clearError(){document.getElementById('errorBox').style.display='none';}
 
-function showError(msg) {
-  const b = document.getElementById('errorBox');
-  b.textContent = '⚠ ' + msg;
-  b.style.display = 'block';
-}
-function clearError() { document.getElementById('errorBox').style.display='none'; }
-
-// ── PROCESS FILE ──────────────────────────────────────────────────────────────
-function processFile(file) {
+function processFile(file){
   clearError();
-  document.getElementById('loading').style.display = 'block';
-  document.getElementById('dashboard').style.display = 'none';
-
-  const reader = new FileReader();
-  const isCSV  = file.name.toLowerCase().endsWith('.csv');
-
-  reader.onload = e => {
-    try {
+  document.getElementById('loading').style.display='block';
+  document.getElementById('dashboard').style.display='none';
+  const reader=new FileReader();
+  const isCSV=file.name.toLowerCase().endsWith('.csv');
+  reader.onload=e=>{
+    try{
       let rows;
-      if(isCSV) {
-        const text = e.target.result;
-        rows = text.trim().split('\n').map(line =>
-          line.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(c=>c.replace(/^"|"$/g,'').trim())
-        );
+      if(isCSV){
+        const text=e.target.result;
+        rows=text.trim().split('\n').map(line=>line.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(c=>c.replace(/^"|"$/g,'').trim()));
       } else {
-        // ─────────────────────────────────────────────────────────────────
-        // v5 DATE PARSING — bulletproof against browser timezones.
-        //
-        // BACKGROUND: When SheetJS reads a date cell with cellDates:true,
-        // it produces a JS Date object. In some browser/timezone combos
-        // this Date is at LOCAL midnight (not UTC midnight) of the intended
-        // day. Computing an Excel serial from that Date via getTime()
-        // works only if the timezone offset is zero. In a positive offset
-        // (e.g. India IST = UTC+5:30), Jan 1 local midnight is Dec 31
-        // 18:30 UTC, so the computed serial is fractional and floors to
-        // the WRONG day. Result: the entire dataset shifts back by one
-        // day, and any 1st-of-month becomes the last day of the previous
-        // month — which is exactly the bug the user reported.
-        //
-        // FIX: read with cellDates:false so the date column comes through
-        // as the raw Excel serial number (an integer like 44197). That
-        // serial has zero timezone ambiguity. We convert it ourselves using
-        // SSF.parse_date_code, which gives the calendar date Excel stored.
-        //
-        // Also turning on raw:false / cellText:true keeps cell.w (formatted
-        // text) available as a fallback for cells we can't otherwise parse.
-        // ─────────────────────────────────────────────────────────────────
-        const wb  = XLSX.read(e.target.result, {type:'binary', cellDates:false, cellNF:true});
-        const ws  = wb.Sheets[wb.SheetNames[0]];
-        if(!ws || !ws['!ref']) { document.getElementById('loading').style.display='none'; showError('Worksheet appears empty.'); return; }
-        const range = XLSX.utils.decode_range(ws['!ref']);
-
-        rows = [];
-        for(let R = range.s.r; R <= range.e.r; R++) {
-          const row = [];
-          for(let C = range.s.c; C <= range.e.c; C++) {
-            const cellRef = XLSX.utils.encode_cell({r:R, c:C});
-            const cell = ws[cellRef];
-            if(!cell) { row.push(''); continue; }
-
-            if(C === range.s.c) {
-              // Date column.
-              // With cellDates:false, a date cell has:
-              //   cell.t === 'n'    (numeric type, since we asked for raw)
-              //   cell.v === <Excel serial number, e.g. 44197>
-              //   cell.w === <formatted display string, e.g. "1/1/21">
-              // We detect it's a date by checking the format string (cell.z)
-              // for any date pattern, or by noticing that cell.w looks like
-              // a date.
-              let pushed = false;
-              const looksLikeDateFormat = cell.z &&
-                /[ymdhMs]/i.test(String(cell.z)) &&
-                !/^[#0,.\-+()% ]+$/.test(String(cell.z));
-
-              if(cell.t === 'n' && typeof cell.v === 'number' && looksLikeDateFormat
-                 && XLSX.SSF && XLSX.SSF.parse_date_code) {
-                try {
-                  const dc = XLSX.SSF.parse_date_code(cell.v);
-                  if(dc && dc.y && dc.m) {
-                    row.push({ __excelDate: true, y: dc.y, m: dc.m, d: dc.d });
-                    pushed = true;
-                  }
-                } catch(_) { /* fall through */ }
+        const wb=XLSX.read(e.target.result,{type:'binary',cellDates:false,cellNF:true});
+        const ws=wb.Sheets[wb.SheetNames[0]];
+        if(!ws||!ws['!ref']){document.getElementById('loading').style.display='none';showError('Worksheet appears empty.');return;}
+        const range=XLSX.utils.decode_range(ws['!ref']);
+        rows=[];
+        for(let R=range.s.r;R<=range.e.r;R++){
+          const row=[];
+          for(let C=range.s.c;C<=range.e.c;C++){
+            const cellRef=XLSX.utils.encode_cell({r:R,c:C});
+            const cell=ws[cellRef];
+            if(!cell){row.push('');continue;}
+            if(C===range.s.c){
+              let pushed=false;
+              const looksLikeDateFormat=cell.z&&/[ymdhMs]/i.test(String(cell.z))&&!/^[#0,.\-+()% ]+$/.test(String(cell.z));
+              if(cell.t==='n'&&typeof cell.v==='number'&&looksLikeDateFormat&&XLSX.SSF&&XLSX.SSF.parse_date_code){
+                try{const dc=XLSX.SSF.parse_date_code(cell.v);if(dc&&dc.y&&dc.m){row.push({__excelDate:true,y:dc.y,m:dc.m,d:dc.d});pushed=true;}}catch(_){}
               }
-              if(!pushed) {
-                // Fall back to formatted text (cell.w), which is what Excel
-                // displays for the cell. As a last resort, use cell.v.
-                row.push(cell.w !== undefined && cell.w !== '' ? cell.w : cell.v);
-              }
-            } else {
-              // Data columns — always use the raw numeric value
-              row.push(cell.v);
-            }
+              if(!pushed)row.push(cell.w!==undefined&&cell.w!==''?cell.w:cell.v);
+            } else {row.push(cell.v);}
           }
           rows.push(row);
         }
       }
-
-      // Filter empty rows
-      rows = rows.filter(r => r.some(c => c !== '' && c !== null && c !== undefined));
-      if(rows.length < 3) { document.getElementById('loading').style.display='none'; showError('File must have at least 3 data rows (excluding header).'); return; }
-
-      // Trim trailing empty columns. Excel often reports a "used range"
-      // wider than the actual data because of past formatting — we don't
-      // want to count those phantom empty columns as data series.
-      let lastReal = rows[0].length - 1;
-      while(lastReal >= 0) {
-        const v = rows[0][lastReal];
-        const isEmpty = (v === '' || v === null || v === undefined ||
-                         (typeof v === 'string' && v.trim() === ''));
-        if(!isEmpty) break;
-        lastReal--;
-      }
-      // Truncate every row to the real width
-      rows = rows.map(r => r.slice(0, lastReal + 1));
-
-      const header = rows[0].map(String);
-      const colCount = header.length - 1; // exclude date column
-
-      if(colCount < 3) { document.getElementById('loading').style.display='none'; showError(`Need at least 3 data series columns. Found ${colCount}. Check your file.`); return; }
-      if(colCount > 12) { document.getElementById('loading').style.display='none'; showError(`Maximum 12 series allowed. Your file has ${colCount} series columns.`); return; }
-
-      // Parse
-      seriesNames = header.slice(1, colCount+1);
-      seriesData  = Array.from({length:colCount}, ()=>[]);
-      dateLabels  = [];
-      dateParsed  = [];
-      dateRawList = [];
-
-      // Track rejection reasons to give the user actionable feedback if
-      // 0 rows pass validation
-      let rejectedNoDate = 0;
-      let rejectedBadValue = 0;
-      let rejectedSampleReason = '';
-
-      for(let ri=1; ri<rows.length; ri++) {
-        const row = rows[ri];
-        const dateRaw = row[0];
-        let dateStr;
-        let parsedYM = null;
-        let rawForDebug; // human-readable representation of original cell
-
-        if(dateRaw && typeof dateRaw === 'object' && dateRaw.__excelDate) {
-          // Strongest path: y/m/d came directly from XLSX.SSF.parse_date_code
-          // on the cell's stored Excel serial. No timezone, no Date object,
-          // no string regex — just the calendar date as Excel has it.
-          const _mn = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-          parsedYM = { year: dateRaw.y, month: dateRaw.m - 1 };
-          dateStr  = _mn[parsedYM.month] + '-' + dateRaw.y;
-          rawForDebug = `[Excel serial → SSF] ${dateRaw.y}-${String(dateRaw.m).padStart(2,'0')}-${String(dateRaw.d).padStart(2,'0')}`;
-        } else if(dateRaw instanceof Date) {
-          // Fallback for Date cells where SSF wasn't available: use UTC
-          // accessors to avoid local-timezone shifts.
-          const _mn = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-          parsedYM = { year: dateRaw.getUTCFullYear(), month: dateRaw.getUTCMonth() };
-          dateStr  = _mn[parsedYM.month] + '-' + parsedYM.year;
-          rawForDebug = `[Date fallback] UTC=${dateRaw.toISOString()}`;
-        } else if(typeof dateRaw === 'number' && !isNaN(dateRaw) && dateRaw > 1000 && dateRaw < 80000) {
-          // Numeric cell that wasn't tagged as a date by format detection
-          // — but the value is in Excel-serial range. Treat it as a date.
-          if(XLSX.SSF && XLSX.SSF.parse_date_code) {
-            try {
-              const dc = XLSX.SSF.parse_date_code(dateRaw);
-              if(dc && dc.y && dc.m) {
-                const _mn = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-                parsedYM = { year: dc.y, month: dc.m - 1 };
-                dateStr  = _mn[parsedYM.month] + '-' + dc.y;
-                rawForDebug = `[Numeric→serial] ${dateRaw} → ${dc.y}-${dc.m}-${dc.d}`;
-              }
-            } catch(_) {}
+      rows=rows.filter(r=>r.some(c=>c!==''&&c!==null&&c!==undefined));
+      if(rows.length<3){document.getElementById('loading').style.display='none';showError('File must have at least 3 data rows (excluding header).');return;}
+      let lastReal=rows[0].length-1;
+      while(lastReal>=0){const v=rows[0][lastReal];if(!(v===''||v===null||v===undefined||(typeof v==='string'&&v.trim()==='')))break;lastReal--;}
+      rows=rows.map(r=>r.slice(0,lastReal+1));
+      const header=rows[0].map(String);
+      const colCount=header.length-1;
+      if(colCount<3){document.getElementById('loading').style.display='none';showError(`Need at least 3 data series columns. Found ${colCount}.`);return;}
+      if(colCount>12){document.getElementById('loading').style.display='none';showError(`Maximum 12 series allowed. Your file has ${colCount}.`);return;}
+      seriesNames=header.slice(1,colCount+1);
+      seriesData=Array.from({length:colCount},()=>[]);
+      dateLabels=[];dateParsed=[];dateRawList=[];
+      let rejectedNoDate=0,rejectedBadValue=0,rejectedSampleReason='';
+      for(let ri=1;ri<rows.length;ri++){
+        const row=rows[ri];const dateRaw=row[0];
+        let dateStr,parsedYM=null,rawForDebug;
+        if(dateRaw&&typeof dateRaw==='object'&&dateRaw.__excelDate){
+          const _mn=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+          parsedYM={year:dateRaw.y,month:dateRaw.m-1};
+          dateStr=_mn[parsedYM.month]+'-'+dateRaw.y;
+          rawForDebug=`[Excel serial → SSF] ${dateRaw.y}-${String(dateRaw.m).padStart(2,'0')}-${String(dateRaw.d).padStart(2,'0')}`;
+        } else if(dateRaw instanceof Date){
+          const _mn=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+          parsedYM={year:dateRaw.getUTCFullYear(),month:dateRaw.getUTCMonth()};
+          dateStr=_mn[parsedYM.month]+'-'+parsedYM.year;rawForDebug=`[Date fallback] UTC=${dateRaw.toISOString()}`;
+        } else if(typeof dateRaw==='number'&&!isNaN(dateRaw)&&dateRaw>1000&&dateRaw<80000){
+          if(XLSX.SSF&&XLSX.SSF.parse_date_code){
+            try{const dc=XLSX.SSF.parse_date_code(dateRaw);if(dc&&dc.y&&dc.m){const _mn=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];parsedYM={year:dc.y,month:dc.m-1};dateStr=_mn[parsedYM.month]+'-'+dc.y;rawForDebug=`[Numeric→serial] ${dateRaw} → ${dc.y}-${dc.m}-${dc.d}`;}}catch(_){}
           }
-          if(!dateStr) {
-            dateStr = String(dateRaw).trim();
-            parsedYM = robustParseDate(dateStr);
-            rawForDebug = `[Numeric] ${dateRaw}`;
-          }
+          if(!dateStr){dateStr=String(dateRaw).trim();parsedYM=robustParseDate(dateStr);rawForDebug=`[Numeric] ${dateRaw}`;}
         } else {
-          dateStr = String(dateRaw == null ? '' : dateRaw).trim();
-          if(!dateStr) {
-            rejectedNoDate++;
-            if(!rejectedSampleReason) rejectedSampleReason = `Row ${ri+1}: date cell is empty`;
-            continue;
-          }
-          // Parse robustly — do NOT use new Date() as it misreads "01-01-2021" as year 2001
-          parsedYM = robustParseDate(dateStr);
-          rawForDebug = `[String] "${dateStr}"`;
+          dateStr=String(dateRaw==null?'':dateRaw).trim();
+          if(!dateStr){rejectedNoDate++;if(!rejectedSampleReason)rejectedSampleReason=`Row ${ri+1}: date cell is empty`;continue;}
+          parsedYM=robustParseDate(dateStr);rawForDebug=`[String] "${dateStr}"`;
         }
-        if(!dateStr) {
-          rejectedNoDate++;
-          if(!rejectedSampleReason) rejectedSampleReason = `Row ${ri+1}: could not parse date "${dateRaw}"`;
-          continue;
-        }
-
-        let allOk = true;
-        const vals = [];
-        for(let ci=0; ci<colCount; ci++) {
-          const rawCell = row[ci+1];
-          const v = parseFloat(String(rawCell == null ? '' : rawCell).replace(/,/g,''));
-          if(isNaN(v)) {
-            allOk = false;
-            if(!rejectedSampleReason) rejectedSampleReason = `Row ${ri+1}: column "${seriesNames[ci]}" has non-numeric value: "${rawCell}"`;
-            break;
-          }
+        if(!dateStr){rejectedNoDate++;if(!rejectedSampleReason)rejectedSampleReason=`Row ${ri+1}: could not parse date "${dateRaw}"`;continue;}
+        let allOk=true;const vals=[];
+        for(let ci=0;ci<colCount;ci++){
+          const rawCell=row[ci+1];const v=parseFloat(String(rawCell==null?'':rawCell).replace(/,/g,''));
+          if(isNaN(v)){allOk=false;if(!rejectedSampleReason)rejectedSampleReason=`Row ${ri+1}: column "${seriesNames[ci]}" has non-numeric value: "${rawCell}"`;break;}
           vals.push(v);
         }
-        if(!allOk) { rejectedBadValue++; continue; }
-
-        dateLabels.push(dateStr);
-        dateParsed.push(parsedYM); // may be null if unparseable
-        dateRawList.push(rawForDebug);
+        if(!allOk){rejectedBadValue++;continue;}
+        dateLabels.push(dateStr);dateParsed.push(parsedYM);dateRawList.push(rawForDebug);
         vals.forEach((v,i)=>seriesData[i].push(v));
       }
-
-      if(dateLabels.length < 5) {
+      if(dateLabels.length<5){
         document.getElementById('loading').style.display='none';
-        let msg = `Only ${dateLabels.length} valid data rows found. Need at least 5.`;
-        if(rejectedNoDate > 0 || rejectedBadValue > 0) {
-          msg += ` (Skipped ${rejectedNoDate} row(s) with bad/missing date, ${rejectedBadValue} row(s) with non-numeric values.`;
-          if(rejectedSampleReason) msg += ' First problem: ' + rejectedSampleReason + '.';
-          msg += ')';
-        } else {
-          msg += ' Check that row 1 contains column headers and rows 2+ contain dates in column A and numbers in columns B onward.';
-        }
-        showError(msg);
-        return;
+        let msg=`Only ${dateLabels.length} valid data rows found. Need at least 5.`;
+        if(rejectedNoDate>0||rejectedBadValue>0){msg+=` (Skipped ${rejectedNoDate} row(s) with bad/missing date, ${rejectedBadValue} row(s) with non-numeric values.`;if(rejectedSampleReason)msg+=' First problem: '+rejectedSampleReason+'.';msg+=')';}
+        else{msg+=' Check that row 1 contains column headers and rows 2+ contain dates in column A and numbers in columns B onward.';}
+        showError(msg);return;
       }
-
-      // Build correlation matrix
-      const N = seriesNames.length;
-      corrMatrix = Array.from({length:N},(_,i)=>
-        Array.from({length:N},(_,j)=>pearson(seriesData[i],seriesData[j]))
-      );
-
-      // Update meta
-      document.getElementById('meta-n').textContent    = N;
-      document.getElementById('meta-rows').textContent = dateLabels.length;
-      document.getElementById('meta-file').textContent = file.name.substring(0,20);
-      document.getElementById('detectedSub').textContent = `${N} SERIES · ${dateLabels.length} OBSERVATIONS`;
-      document.getElementById('trendSub').textContent    = `${dateLabels[0]} → ${dateLabels[dateLabels.length-1]}`;
-
+      const N=seriesNames.length;
+      corrMatrix=Array.from({length:N},(_,i)=>Array.from({length:N},(_,j)=>pearson(seriesData[i],seriesData[j])));
+      document.getElementById('meta-n').textContent=N;
+      document.getElementById('meta-rows').textContent=dateLabels.length;
+      document.getElementById('meta-file').textContent=file.name.substring(0,20);
+      document.getElementById('detectedSub').textContent=`${N} SERIES · ${dateLabels.length} OBSERVATIONS`;
+      document.getElementById('trendSub').textContent=`${dateLabels[0]} → ${dateLabels[dateLabels.length-1]}`;
       renderDashboard();
       document.getElementById('loading').style.display='none';
       document.getElementById('dashboard').style.display='block';
-
-    } catch(err) {
-      document.getElementById('loading').style.display='none';
-      showError('Error reading file: ' + err.message);
-    }
+    } catch(err){document.getElementById('loading').style.display='none';showError('Error reading file: '+err.message);}
   };
-
-  if(isCSV) reader.readAsText(file);
-  else       reader.readAsBinaryString(file);
+  if(isCSV)reader.readAsText(file);else reader.readAsBinaryString(file);
 }
 
-// ── RENDER ALL ────────────────────────────────────────────────────────────────
-function renderDashboard() {
-  renderDebug();
-  renderChips();
-  renderStats();
-  autoDetectAxes();
-  buildAxisToggleBar();
-  renderTimeChart();
-  renderMatrix();
-  renderBestPairs();
-  buildSelects();
-  renderScatter();
-}
+function renderDashboard(){renderDebug();renderChips();renderStats();autoDetectAxes();buildAxisToggleBar();renderTimeChart();renderMatrix();renderBestPairs();buildSelects();renderScatter();}
 
-// ── DEBUG: show how dates were parsed so user can verify alignment ──────────
-function renderDebug() {
-  const box = document.getElementById('debugTable');
-  if(!box) return;
-  const N = dateLabels.length;
-  const showFirst = Math.min(8, N);
-  const showLast  = Math.min(4, Math.max(0, N - showFirst));
-  const idxs = [];
-  for(let i=0;i<showFirst;i++) idxs.push(i);
-  if(showLast>0) {
-    idxs.push(-1); // separator
-    for(let i=N-showLast;i<N;i++) idxs.push(i);
-  }
-  const fmtP = p => p ? `${MONTH_NAMES[p.month]}-${p.year} (m=${p.month}, y=${p.year})` : '<span style="color:#b91c1c">UNPARSED</span>';
-  let html = '<table style="border-collapse:collapse;width:100%;font-size:10px;">';
-  html += `<thead><tr style="background:#f0c674;color:#3a2e10;">`
-        + `<th style="padding:5px 8px;text-align:left;border:1px solid #d4a548;">Row#</th>`
-        + `<th style="padding:5px 8px;text-align:left;border:1px solid #d4a548;">Raw date from file</th>`
-        + `<th style="padding:5px 8px;text-align:left;border:1px solid #d4a548;">Parsed → label</th>`
-        + `<th style="padding:5px 8px;text-align:left;border:1px solid #d4a548;">Parsed → year/month</th>`
-        + `<th style="padding:5px 8px;text-align:right;border:1px solid #d4a548;">${seriesNames[0] || "val[0]"}</th>`
-        + `</tr></thead><tbody>`;
+function renderDebug(){
+  const box=document.getElementById('debugTable');if(!box)return;
+  const N=dateLabels.length,showFirst=Math.min(8,N),showLast=Math.min(4,Math.max(0,N-showFirst));
+  const idxs=[];for(let i=0;i<showFirst;i++)idxs.push(i);
+  if(showLast>0){idxs.push(-1);for(let i=N-showLast;i<N;i++)idxs.push(i);}
+  const fmtP=p=>p?`${MONTH_NAMES[p.month]}-${p.year} (m=${p.month}, y=${p.year})`:'<span style="color:#b91c1c">UNPARSED</span>';
+  let html='<table style="border-collapse:collapse;width:100%;font-size:10px;"><thead><tr style="background:#f0c674;color:#3a2e10;">'
+    +'<th style="padding:5px 8px;text-align:left;border:1px solid #d4a548;">Row#</th>'
+    +'<th style="padding:5px 8px;text-align:left;border:1px solid #d4a548;">Raw date from file</th>'
+    +'<th style="padding:5px 8px;text-align:left;border:1px solid #d4a548;">Parsed → label</th>'
+    +'<th style="padding:5px 8px;text-align:left;border:1px solid #d4a548;">Parsed → year/month</th>'
+    +`<th style="padding:5px 8px;text-align:right;border:1px solid #d4a548;">${seriesNames[0]||"val[0]"}</th>`
+    +'</tr></thead><tbody>';
   idxs.forEach(i=>{
-    if(i===-1){
-      html += `<tr><td colspan="5" style="text-align:center;padding:4px;color:#999;">… ${N - showFirst - showLast} more rows …</td></tr>`;
-      return;
-    }
-    html += `<tr style="background:${i%2?'#fff':'#fefaee'};">`
-         + `<td style="padding:4px 8px;border:1px solid #e8d8a8;">${i+1}</td>`
-         + `<td style="padding:4px 8px;border:1px solid #e8d8a8;font-family:monospace;">${dateRawList[i] || '—'}</td>`
-         + `<td style="padding:4px 8px;border:1px solid #e8d8a8;font-weight:700;">${dateLabels[i]}</td>`
-         + `<td style="padding:4px 8px;border:1px solid #e8d8a8;">${fmtP(dateParsed[i])}</td>`
-         + `<td style="padding:4px 8px;border:1px solid #e8d8a8;text-align:right;">${seriesData[0]?.[i]?.toLocaleString() ?? '—'}</td>`
-         + `</tr>`;
+    if(i===-1){html+=`<tr><td colspan="5" style="text-align:center;padding:4px;color:#999;">… ${N-showFirst-showLast} more rows …</td></tr>`;return;}
+    html+=`<tr style="background:${i%2?'#fff':'#fefaee'};">`
+      +`<td style="padding:4px 8px;border:1px solid #e8d8a8;">${i+1}</td>`
+      +`<td style="padding:4px 8px;border:1px solid #e8d8a8;font-family:monospace;">${dateRawList[i]||'—'}</td>`
+      +`<td style="padding:4px 8px;border:1px solid #e8d8a8;font-weight:700;">${dateLabels[i]}</td>`
+      +`<td style="padding:4px 8px;border:1px solid #e8d8a8;">${fmtP(dateParsed[i])}</td>`
+      +`<td style="padding:4px 8px;border:1px solid #e8d8a8;text-align:right;">${seriesData[0]?.[i]?.toLocaleString()??'—'}</td>`
+      +'</tr>';
   });
-  html += '</tbody></table>';
-  box.innerHTML = html;
-
-  // Wire download button (idempotent)
-  const btn = document.getElementById('debugDownloadBtn');
-  if(btn && !btn.dataset.wired) {
-    btn.dataset.wired = '1';
-    btn.onclick = () => {
-      // Proper CSV escaping: any field containing comma, double-quote, or
-      // newline must be wrapped in double-quotes, with internal quotes
-      // doubled. Without this, series names like "SN 600-700, Group 1 - USA"
-      // get split across columns when the CSV is opened in Excel.
-      const csvEscape = (v) => {
-        if(v === null || v === undefined) return '';
-        const s = String(v);
-        if(/[",\n\r]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
-        return s;
-      };
-      const headerCells = ['Row','RawDate','ParsedLabel','ParsedYear','ParsedMonth(0-11)', ...seriesNames];
-      const lines = [headerCells.map(csvEscape).join(',')];
-      for(let i=0;i<N;i++){
-        const p = dateParsed[i];
-        const rowCells = [
-          i+1,
-          (dateRawList[i] || ''),
-          dateLabels[i],
-          p?.year ?? '',
-          p?.month ?? '',
-          ...seriesData.map(s => s[i] ?? '')
-        ];
-        lines.push(rowCells.map(csvEscape).join(','));
-      }
-      const blob = new Blob([lines.join('\n')], {type:'text/csv'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = 'parsed_data_debug.csv';
-      a.click();
-      setTimeout(()=>URL.revokeObjectURL(url), 1000);
+  html+='</tbody></table>';box.innerHTML=html;
+  const btn=document.getElementById('debugDownloadBtn');
+  if(btn&&!btn.dataset.wired){
+    btn.dataset.wired='1';
+    btn.onclick=()=>{
+      const csvEscape=v=>{if(v===null||v===undefined)return'';const s=String(v);if(/[",\n\r]/.test(s))return'"'+s.replace(/"/g,'""')+'"';return s;};
+      const headerCells=['Row','RawDate','ParsedLabel','ParsedYear','ParsedMonth(0-11)',...seriesNames];
+      const lines=[headerCells.map(csvEscape).join(',')];
+      for(let i=0;i<N;i++){const p=dateParsed[i];const rowCells=[i+1,(dateRawList[i]||''),dateLabels[i],p?.year??'',p?.month??'',...seriesData.map(s=>s[i]??'')];lines.push(rowCells.map(csvEscape).join(','));}
+      const blob=new Blob([lines.join('\n')],{type:'text/csv'});const url=URL.createObjectURL(blob);
+      const a=document.createElement('a');a.href=url;a.download='parsed_data_debug.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
     };
   }
 }
 
-// ── 1. CHIPS ──────────────────────────────────────────────────────────────────
-function renderChips() {
-  const div = document.getElementById('seriesChips');
-  div.innerHTML = seriesNames.map((n,i)=>`
-    <div class="chip" style="background:${PALETTE[i]}">
-      <div class="chip-dot"></div>${n}
-    </div>`).join('');
+function renderChips(){
+  document.getElementById('seriesChips').innerHTML=seriesNames.map((n,i)=>`<div class="chip" style="background:${PALETTE[i]}"><div class="chip-dot"></div>${n}</div>`).join('');
 }
 
-// ── 2. STATS + SEASONALITY ────────────────────────────────────────────────────
+const MONTH_NAMES=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const MONTH_FULL=["January","February","March","April","May","June","July","August","September","October","November","December"];
 
-const MONTH_NAMES = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-const MONTH_FULL  = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-
-// Compute mode (most frequent rounded value)
-function computeMode(arr) {
-  const rounded = arr.map(v => Math.round(v / 10) * 10); // round to nearest 10
-  const freq = {};
-  rounded.forEach(v => freq[v] = (freq[v]||0)+1);
-  const maxF = Math.max(...Object.values(freq));
-  if(maxF < 2) return null; // no repeated value
-  const modes = Object.keys(freq).filter(k=>freq[k]===maxF).map(Number);
-  return { values: modes, count: maxF };
-}
-
-// Robust date parser — handles many real-world formats WITHOUT using new Date()
-// which misreads "01-01-2021" as year 2001 in many browsers.
-function robustParseDate(s) {
-  s = s.trim();
-
-  // Format: "01-Jan-2021" or "01 Jan 2021" or "Jan-21" or "Jan 2021"
-  const re1 = /(\d{1,2})[\s\-\/]([A-Za-z]{3,9})[\s\-\/](\d{2,4})/;
-  const re2 = /([A-Za-z]{3,9})[\s\-\/](\d{1,2})[\s\-\/]?(\d{2,4})?/;
-  const re3 = /([A-Za-z]{3,9})[\s\-\/](\d{2,4})/;  // "Jan-2021" or "Jan-21"
-
-  // Numeric: DD-MM-YYYY or MM-DD-YYYY or YYYY-MM-DD
-  const reNum = /^(\d{1,4})[\-\/\.](\d{1,2})[\-\/\.](\d{2,4})$/;
-
+function robustParseDate(s){
+  s=s.trim();
+  const re1=/(\d{1,2})[\s\-\/]([A-Za-z]{3,9})[\s\-\/](\d{2,4})/;
+  const re3=/([A-Za-z]{3,9})[\s\-\/](\d{2,4})/;
+  const reNum=/^(\d{1,4})[\-\/\.](\d{1,2})[\-\/\.](\d{2,4})$/;
   let m;
-
-  m = re1.exec(s);
-  if(m) {
-    const mi = parseMonthName(m[2]);
-    if(mi >= 0) {
-      let yr = parseInt(m[3]);
-      if(yr < 100) yr += 2000;
-      return { year: yr, month: mi };
-    }
-  }
-
-  m = re3.exec(s);
-  if(m) {
-    const mi = parseMonthName(m[1]);
-    if(mi >= 0) {
-      let yr = parseInt(m[2]);
-      if(yr < 100) yr += 2000;
-      return { year: yr, month: mi };
-    }
-  }
-
-  m = reNum.exec(s);
-  if(m) {
-    const a = parseInt(m[1]), b = parseInt(m[2]), c = parseInt(m[3]);
-    // YYYY-MM-DD
-    if(a > 1900) return { year: a, month: b - 1 };
-    // DD-MM-YYYY (most common in India/Europe)
-    let yr = c < 100 ? c + 2000 : c;
-    return { year: yr, month: b - 1 };
-  }
-
-  // Plain year only e.g. "2021"
-  if(/^\d{4}$/.test(s)) return { year: parseInt(s), month: 0 };
-
+  m=re1.exec(s);if(m){const mi=parseMonthName(m[2]);if(mi>=0){let yr=parseInt(m[3]);if(yr<100)yr+=2000;return{year:yr,month:mi};}}
+  m=re3.exec(s);if(m){const mi=parseMonthName(m[1]);if(mi>=0){let yr=parseInt(m[2]);if(yr<100)yr+=2000;return{year:yr,month:mi};}}
+  m=reNum.exec(s);if(m){const a=parseInt(m[1]),b=parseInt(m[2]),c=parseInt(m[3]);if(a>1900)return{year:a,month:b-1};let yr=c<100?c+2000:c;return{year:yr,month:b-1};}
+  if(/^\d{4}$/.test(s))return{year:parseInt(s),month:0};
   return null;
 }
+function parseMonthName(str){return["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"].indexOf(str.substring(0,3).toLowerCase());}
 
-function parseMonthName(str) {
-  const abbr = str.substring(0,3).toLowerCase();
-  return ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"].indexOf(abbr);
-}
-
-// Build per-series monthly data using pre-parsed dateParsed[]
-// MoM change for a row at (year=Y, month=M) is computed as:
-//     value(Y,M) − value(prevYear, prevMonth)
-// where the prior calendar month is looked up EXPLICITLY by (year,month)
-// rather than just trusting array index k-1. This way:
-//   • the change is always correctly attributed to the month it belongs to
-//   • gaps in the data (missing months) correctly produce change=null
-//   • non-chronological ordering still yields correct results
-//   • there is no possibility of a row "stealing" the next row's change
-function buildSeriesTimeline(si) {
-  const vals = seriesData[si];
-
-  // Build a (year,month) → value lookup for this series
-  const lookup = {};
-  dateParsed.forEach((p,i)=>{
-    if(p && p.year !== null && p.month !== null) {
-      lookup[p.year + '-' + p.month] = vals[i];
-    }
-  });
-
+function buildSeriesTimeline(si){
+  const vals=seriesData[si];
+  const lookup={};
+  dateParsed.forEach((p,i)=>{if(p&&p.year!==null&&p.month!==null)lookup[p.year+'-'+p.month]=vals[i];});
   return dateLabels.map((lbl,k)=>{
-    const parsed = dateParsed[k];
-    let change = null, pct = null;
-
-    if(parsed && parsed.year !== null && parsed.month !== null) {
-      // Compute previous calendar month explicitly
-      const prevYear  = parsed.month === 0 ? parsed.year - 1 : parsed.year;
-      const prevMonth = parsed.month === 0 ? 11 : parsed.month - 1;
-      const prevVal   = lookup[prevYear + '-' + prevMonth];
-
-      if(prevVal !== undefined) {
-        change = vals[k] - prevVal;
-        if(prevVal !== 0) pct = (vals[k] / prevVal - 1) * 100;
-      }
+    const parsed=dateParsed[k];let change=null,pct=null;
+    if(parsed&&parsed.year!==null&&parsed.month!==null){
+      const prevYear=parsed.month===0?parsed.year-1:parsed.year;
+      const prevMonth=parsed.month===0?11:parsed.month-1;
+      const prevVal=lookup[prevYear+'-'+prevMonth];
+      if(prevVal!==undefined){change=vals[k]-prevVal;if(prevVal!==0)pct=(vals[k]/prevVal-1)*100;}
     }
-
-    return {
-      label: lbl,
-      year:  parsed?.year  ?? null,
-      month: parsed?.month ?? null,
-      value: vals[k],
-      change, pct
-    };
+    return{label:lbl,year:parsed?.year??null,month:parsed?.month??null,value:vals[k],change,pct};
   });
 }
+function computeMedian(arr){const sorted=[...arr].sort((a,b)=>a-b);const mid=Math.floor(sorted.length/2);return sorted.length%2!==0?sorted[mid]:(sorted[mid-1]+sorted[mid])/2;}
 
-function computeMedian(arr) {
-  const sorted = [...arr].sort((a,b)=>a-b);
-  const mid = Math.floor(sorted.length/2);
-  return sorted.length%2 !== 0 ? sorted[mid] : (sorted[mid-1]+sorted[mid])/2;
-}
-
-function renderStatsCards() {
-  const selYrRaw = document.getElementById('statsYearSel')?.value ?? 'all';
-  const selYr    = selYrRaw === 'all' ? null : parseInt(selYrRaw);
-  const bar      = document.getElementById('statsBar');
-
-  bar.innerHTML = seriesNames.map((n,i)=>{
-    let vals;
-    if(selYr === null) {
-      vals = seriesData[i];
-    } else {
-      vals = seriesData[i].filter((_,k) => dateParsed[k]?.year === selYr);
-    }
-    if(!vals.length) {
-      return `<div class="stat-card">
-        <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">
-          <div style="width:10px;height:10px;border-radius:50%;background:${PALETTE[i]};flex-shrink:0"></div>
-          <div class="s-name" title="${n}" style="font-weight:700;color:var(--ink);font-size:11px">${n}</div>
-        </div>
-        <div style="font-size:11px;color:var(--ink3)">No data for ${selYr}</div>
-      </div>`;
-    }
-    const mean   = vals.reduce((a,b)=>a+b,0)/vals.length;
-    const median = computeMedian(vals);
-    const min    = Math.min(...vals);
-    const max    = Math.max(...vals);
-    return `<div class="stat-card">
-      <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">
-        <div style="width:10px;height:10px;border-radius:50%;background:${PALETTE[i]};flex-shrink:0"></div>
-        <div class="s-name" title="${n}" style="font-weight:700;color:var(--ink);font-size:11px">${n}</div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 10px;font-family:'JetBrains Mono',monospace;font-size:11px">
-        <div><span style="color:var(--ink3);font-size:9px;text-transform:uppercase;letter-spacing:1px">Mean</span><br><b style="color:${PALETTE[i]}">${mean.toLocaleString(undefined,{maximumFractionDigits:0})}</b></div>
-        <div><span style="color:var(--ink3);font-size:9px;text-transform:uppercase;letter-spacing:1px">Median</span><br><b>${median.toLocaleString(undefined,{maximumFractionDigits:0})}</b></div>
-        <div><span style="color:var(--ink3);font-size:9px;text-transform:uppercase;letter-spacing:1px">Min</span><br>${min.toLocaleString(undefined,{maximumFractionDigits:0})}</div>
-        <div><span style="color:var(--ink3);font-size:9px;text-transform:uppercase;letter-spacing:1px">Max</span><br>${max.toLocaleString(undefined,{maximumFractionDigits:0})}</div>
-      </div>
-    </div>`;
+function renderStatsCards(){
+  const selYrRaw=document.getElementById('statsYearSel')?.value??'all';
+  const selYr=selYrRaw==='all'?null:parseInt(selYrRaw);
+  const bar=document.getElementById('statsBar');
+  bar.innerHTML=seriesNames.map((n,i)=>{
+    let vals=selYr===null?seriesData[i]:seriesData[i].filter((_,k)=>dateParsed[k]?.year===selYr);
+    if(!vals.length)return`<div class="stat-card"><div style="display:flex;align-items:center;gap:6px;margin-bottom:6px"><div style="width:10px;height:10px;border-radius:50%;background:${PALETTE[i]};flex-shrink:0"></div><div class="s-name" style="font-weight:700;color:var(--ink);font-size:11px">${n}</div></div><div style="font-size:11px;color:var(--ink3)">No data for ${selYr}</div></div>`;
+    const mean=vals.reduce((a,b)=>a+b,0)/vals.length,median=computeMedian(vals),min=Math.min(...vals),max=Math.max(...vals);
+    return`<div class="stat-card"><div style="display:flex;align-items:center;gap:6px;margin-bottom:6px"><div style="width:10px;height:10px;border-radius:50%;background:${PALETTE[i]};flex-shrink:0"></div><div class="s-name" title="${n}" style="font-weight:700;color:var(--ink);font-size:11px">${n}</div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 10px;font-family:'JetBrains Mono',monospace;font-size:11px"><div><span style="color:var(--ink3);font-size:9px;text-transform:uppercase;letter-spacing:1px">Mean</span><br><b style="color:${PALETTE[i]}">${mean.toLocaleString(undefined,{maximumFractionDigits:0})}</b></div><div><span style="color:var(--ink3);font-size:9px;text-transform:uppercase;letter-spacing:1px">Median</span><br><b>${median.toLocaleString(undefined,{maximumFractionDigits:0})}</b></div><div><span style="color:var(--ink3);font-size:9px;text-transform:uppercase;letter-spacing:1px">Min</span><br>${min.toLocaleString(undefined,{maximumFractionDigits:0})}</div><div><span style="color:var(--ink3);font-size:9px;text-transform:uppercase;letter-spacing:1px">Max</span><br>${max.toLocaleString(undefined,{maximumFractionDigits:0})}</div></div></div>`;
   }).join('');
 }
 
-function renderStats() {
-  // Build stats year select
-  const statsYrSel = document.getElementById('statsYearSel');
-  const allYearsStats = [...new Set(dateParsed.filter(d=>d?.year).map(d=>d.year))].sort();
-  statsYrSel.innerHTML = `<option value="all">All Years (Average)</option>` +
-    allYearsStats.map(y=>`<option value="${y}">${y}</option>`).join('');
-  statsYrSel.onchange = renderStatsCards;
-  renderStatsCards();
-
-  // Build season selects
-  const sSel = document.getElementById('seasonSeriesSel');
-  const mSel = document.getElementById('seasonMonthSel');
-  const yrSel = document.getElementById('seasonYearSel');
-
-  sSel.innerHTML = seriesNames.map((n,i)=>`<option value="${i}">${n}</option>`).join('');
-
-  // Populate year dropdown from dateParsed
-  const allYears = [...new Set(dateParsed.filter(d=>d?.year).map(d=>d.year))].sort();
-  yrSel.innerHTML = `<option value="all">All Years</option>` +
-    allYears.map(y=>`<option value="${y}">${y}</option>`).join('');
-
-  sSel.onchange  = renderSeasonality;
-  mSel.onchange  = renderSeasonality;
-  yrSel.onchange = renderSeasonality;
+function renderStats(){
+  const statsYrSel=document.getElementById('statsYearSel');
+  const allYearsStats=[...new Set(dateParsed.filter(d=>d?.year).map(d=>d.year))].sort();
+  statsYrSel.innerHTML=`<option value="all">All Years (Average)</option>`+allYearsStats.map(y=>`<option value="${y}">${y}</option>`).join('');
+  statsYrSel.onchange=renderStatsCards;renderStatsCards();
+  const sSel=document.getElementById('seasonSeriesSel'),yrSel=document.getElementById('seasonYearSel');
+  sSel.innerHTML=seriesNames.map((n,i)=>`<option value="${i}">${n}</option>`).join('');
+  const allYears=[...new Set(dateParsed.filter(d=>d?.year).map(d=>d.year))].sort();
+  yrSel.innerHTML=`<option value="all">All Years</option>`+allYears.map(y=>`<option value="${y}">${y}</option>`).join('');
+  sSel.onchange=renderSeasonality;document.getElementById('seasonMonthSel').onchange=renderSeasonality;yrSel.onchange=renderSeasonality;
   renderSeasonality();
 }
 
-function renderSeasonality() {
-  const si     = +document.getElementById('seasonSeriesSel').value;
-  const selM   = +document.getElementById('seasonMonthSel').value;
-  const selYrRaw = document.getElementById('seasonYearSel').value;
-  const selYr  = selYrRaw === 'all' ? null : parseInt(selYrRaw);
-  const color  = PALETTE[si];
-  const tl     = buildSeriesTimeline(si);
-
-  // ── KPIs for selected month (respect year filter) ─────────────────────────
-  const monthRows = tl.filter(r =>
-    r.month === selM &&
-    r.change !== null &&
-    (selYr === null || r.year === selYr)
-  );
-  const inc  = monthRows.filter(r=>r.change>0);
-  const dec  = monthRows.filter(r=>r.change<0);
-  const flat = monthRows.filter(r=>r.change===0);
-
-  const avgInc = inc.length  ? inc.reduce((s,r)=>s+r.change,0)/inc.length  : 0;
-  const avgDec = dec.length  ? dec.reduce((s,r)=>s+r.change,0)/dec.length  : 0;
-  const avgPct = monthRows.length ? monthRows.reduce((s,r)=>s+(r.pct??0),0)/monthRows.length : 0;
-
-  const modeVals = tl.filter(r => r.month===selM && (selYr===null||r.year===selYr)).map(r=>r.value);
-  const medianVal = modeVals.length ? computeMedian(modeVals) : null;
-  const yearLabel = selYr ? selYr : 'All Years';
-
-  document.getElementById('seasonKpis').innerHTML = `
-    <div class="kpi-card kpi-up">
-      <div class="kpi-label">↑ ${MONTH_FULL[selM]} Increases</div>
-      <div class="kpi-val" style="color:#15803d">${inc.length}</div>
-      <div class="kpi-sub">out of ${monthRows.length} obs · ${yearLabel}</div>
-    </div>
-    <div class="kpi-card kpi-up">
-      <div class="kpi-label">Avg Increase Amount</div>
-      <div class="kpi-val" style="color:#15803d">${inc.length?'+'+avgInc.toLocaleString(undefined,{maximumFractionDigits:1}):'—'}</div>
-      <div class="kpi-sub">when price rose</div>
-    </div>
-    <div class="kpi-card kpi-down">
-      <div class="kpi-label">↓ ${MONTH_FULL[selM]} Decreases</div>
-      <div class="kpi-val" style="color:#b91c1c">${dec.length}</div>
-      <div class="kpi-sub">out of ${monthRows.length} obs · ${yearLabel}</div>
-    </div>
-    <div class="kpi-card kpi-down">
-      <div class="kpi-label">Avg Decrease Amount</div>
-      <div class="kpi-val" style="color:#b91c1c">${dec.length?avgDec.toLocaleString(undefined,{maximumFractionDigits:1}):'—'}</div>
-      <div class="kpi-sub">when price fell</div>
-    </div>
-    <div class="kpi-card kpi-neu">
-      <div class="kpi-label">Flat Months</div>
-      <div class="kpi-val" style="color:var(--gold)">${flat.length}</div>
-      <div class="kpi-sub">no change · ${yearLabel}</div>
-    </div>
-    <div class="kpi-card kpi-neu">
-      <div class="kpi-label">Avg % Change</div>
-      <div class="kpi-val" style="color:${avgPct>=0?'#15803d':'#b91c1c'}">${avgPct>=0?'+':''}${avgPct.toFixed(1)}%</div>
-      <div class="kpi-sub">across ${MONTH_FULL[selM]}s</div>
-    </div>
-    <div class="kpi-card kpi-mode">
-      <div class="kpi-label">Median (${MONTH_FULL[selM]})</div>
-      <div class="kpi-val" style="color:var(--accent2)">${medianVal!==null?medianVal.toLocaleString(undefined,{maximumFractionDigits:1}):'—'}</div>
-      <div class="kpi-sub">${yearLabel}</div>
-    </div>
-    <div class="kpi-card kpi-mode">
-      <div class="kpi-label">Bullish Probability</div>
-      <div class="kpi-val" style="color:var(--accent2)">${monthRows.length?Math.round(inc.length/monthRows.length*100)+'%':'—'}</div>
-      <div class="kpi-sub">${MONTH_FULL[selM]} tends to rise</div>
-    </div>
-  `;
-
-  document.getElementById('seasonTblTitle').textContent =
-    `Monthly Seasonality — ${seriesNames[si]} (MoM Change)${selYr?' · '+selYr:''}`;
-
-  // ── Full 12-month × year grid ─────────────────────────────────────────────
-  const byYear = {};
-  tl.forEach(r => {
-    if(r.year===null) return;
-    if(selYr !== null && r.year !== selYr) return; // year filter for highlight only in full view
-    if(!byYear[r.year]) byYear[r.year] = {};
-    byYear[r.year][r.month] = r;
-  });
-
-  // For the table: if a specific year selected, also include all years but dim non-selected
-  const byYearFull = {};
-  tl.forEach(r => {
-    if(r.year===null) return;
-    if(!byYearFull[r.year]) byYearFull[r.year] = {};
-    byYearFull[r.year][r.month] = r;
-  });
-
-  const years = Object.keys(byYearFull).map(Number).sort();
-
-  // Average change per month across all years (or selected year)
-  const avgByMonth = Array.from({length:12},(_,m)=>{
-    const rows = tl.filter(r=>r.month===m && r.change!==null && (selYr===null||r.year===selYr));
-    if(!rows.length) return null;
-    return rows.reduce((s,r)=>s+r.change,0)/rows.length;
-  });
-
-  let html = '<thead><tr><th>Year</th>';
-  MONTH_NAMES.forEach((mn,mi)=>{
-    const act = mi===selM ? ' active-month' : '';
-    html += `<th class="${act}">${mn}</th>`;
-  });
-  html += '</tr></thead><tbody>';
-
+function renderSeasonality(){
+  const si=+document.getElementById('seasonSeriesSel').value;
+  const selM=+document.getElementById('seasonMonthSel').value;
+  const selYrRaw=document.getElementById('seasonYearSel').value;
+  const selYr=selYrRaw==='all'?null:parseInt(selYrRaw);
+  const color=PALETTE[si],tl=buildSeriesTimeline(si);
+  const monthRows=tl.filter(r=>r.month===selM&&r.change!==null&&(selYr===null||r.year===selYr));
+  const inc=monthRows.filter(r=>r.change>0),dec=monthRows.filter(r=>r.change<0),flat=monthRows.filter(r=>r.change===0);
+  const avgInc=inc.length?inc.reduce((s,r)=>s+r.change,0)/inc.length:0;
+  const avgDec=dec.length?dec.reduce((s,r)=>s+r.change,0)/dec.length:0;
+  const avgPct=monthRows.length?monthRows.reduce((s,r)=>s+(r.pct??0),0)/monthRows.length:0;
+  const modeVals=tl.filter(r=>r.month===selM&&(selYr===null||r.year===selYr)).map(r=>r.value);
+  const medianVal=modeVals.length?computeMedian(modeVals):null;
+  const yearLabel=selYr?selYr:'All Years';
+  document.getElementById('seasonKpis').innerHTML=`
+    <div class="kpi-card kpi-up"><div class="kpi-label">↑ ${MONTH_FULL[selM]} Increases</div><div class="kpi-val" style="color:#15803d">${inc.length}</div><div class="kpi-sub">out of ${monthRows.length} obs · ${yearLabel}</div></div>
+    <div class="kpi-card kpi-up"><div class="kpi-label">Avg Increase Amount</div><div class="kpi-val" style="color:#15803d">${inc.length?'+'+avgInc.toLocaleString(undefined,{maximumFractionDigits:1}):'—'}</div><div class="kpi-sub">when price rose</div></div>
+    <div class="kpi-card kpi-down"><div class="kpi-label">↓ ${MONTH_FULL[selM]} Decreases</div><div class="kpi-val" style="color:#b91c1c">${dec.length}</div><div class="kpi-sub">out of ${monthRows.length} obs · ${yearLabel}</div></div>
+    <div class="kpi-card kpi-down"><div class="kpi-label">Avg Decrease Amount</div><div class="kpi-val" style="color:#b91c1c">${dec.length?avgDec.toLocaleString(undefined,{maximumFractionDigits:1}):'—'}</div><div class="kpi-sub">when price fell</div></div>
+    <div class="kpi-card kpi-neu"><div class="kpi-label">Flat Months</div><div class="kpi-val" style="color:var(--gold)">${flat.length}</div><div class="kpi-sub">no change · ${yearLabel}</div></div>
+    <div class="kpi-card kpi-neu"><div class="kpi-label">Avg % Change</div><div class="kpi-val" style="color:${avgPct>=0?'#15803d':'#b91c1c'}">${avgPct>=0?'+':''}${avgPct.toFixed(1)}%</div><div class="kpi-sub">across ${MONTH_FULL[selM]}s</div></div>
+    <div class="kpi-card kpi-mode"><div class="kpi-label">Median (${MONTH_FULL[selM]})</div><div class="kpi-val" style="color:var(--accent2)">${medianVal!==null?medianVal.toLocaleString(undefined,{maximumFractionDigits:1}):'—'}</div><div class="kpi-sub">${yearLabel}</div></div>
+    <div class="kpi-card kpi-mode"><div class="kpi-label">Bullish Probability</div><div class="kpi-val" style="color:var(--accent2)">${monthRows.length?Math.round(inc.length/monthRows.length*100)+'%':'—'}</div><div class="kpi-sub">${MONTH_FULL[selM]} tends to rise</div></div>`;
+  document.getElementById('seasonTblTitle').textContent=`Monthly Seasonality — ${seriesNames[si]} (MoM Change)${selYr?' · '+selYr:''}`;
+  const byYearFull={};
+  tl.forEach(r=>{if(r.year===null)return;if(!byYearFull[r.year])byYearFull[r.year]={};byYearFull[r.year][r.month]=r;});
+  const years=Object.keys(byYearFull).map(Number).sort();
+  const avgByMonth=Array.from({length:12},(_,m)=>{const rows=tl.filter(r=>r.month===m&&r.change!==null&&(selYr===null||r.year===selYr));if(!rows.length)return null;return rows.reduce((s,r)=>s+r.change,0)/rows.length;});
+  let html='<thead><tr><th>Year</th>';
+  MONTH_NAMES.forEach((mn,mi)=>{html+=`<th class="${mi===selM?' active-month':''}">${mn}</th>`;});
+  html+='</tr></thead><tbody>';
   years.forEach(yr=>{
-    const isSelYear = selYr !== null && yr === selYr;
-    const isDimmed  = selYr !== null && yr !== selYr;
-    const rowStyle  = isDimmed ? 'opacity:0.35;' : '';
-    const yrStyle   = isSelYear
-      ? `background:${color}!important;color:#fff;`
-      : '';
-
-    html += `<tr style="${rowStyle}"><td class="yr-lbl" style="${yrStyle}">${yr}</td>`;
+    const isSelYear=selYr!==null&&yr===selYr,isDimmed=selYr!==null&&yr!==selYr;
+    html+=`<tr style="${isDimmed?'opacity:0.35;':''}"><td class="yr-lbl" style="${isSelYear?`background:${color}!important;color:#fff;`:''}">${yr}</td>`;
     for(let m=0;m<12;m++){
-      const row = byYearFull[yr]?.[m];
-      if(!row || row.change===null) {
-        html += `<td style="color:var(--ink3)">—</td>`;
-      } else {
-        const isUp   = row.change > 0;
-        const isDown = row.change < 0;
-        const bg     = isUp  ? 'rgba(21,128,61,0.13)'  :
-                       isDown? 'rgba(185,28,28,0.11)'  : 'transparent';
-        const tc     = isUp  ? '#15803d' : isDown ? '#b91c1c' : 'var(--ink3)';
-        const arrow  = isUp  ? '↑' : isDown ? '↓' : '→';
-        const isSelM = m===selM;
-        const bord   = isSelM ? `outline:2px solid ${color};outline-offset:-2px;` : '';
-        html += `<td style="background:${bg};color:${tc};${bord}" title="${row.label}: ${row.change>=0?'+':''}${row.change?.toLocaleString(undefined,{maximumFractionDigits:1})}">
-          ${arrow} ${row.change>=0?'+':''}${row.change.toLocaleString(undefined,{maximumFractionDigits:0})}
-          <br><span style="font-size:9px;opacity:0.7">${row.pct!=null?(row.pct>=0?'+':'')+row.pct.toFixed(1)+'%':''}</span>
-        </td>`;
-      }
+      const row=byYearFull[yr]?.[m];
+      if(!row||row.change===null){html+=`<td style="color:var(--ink3)">—</td>`;continue;}
+      const isUp=row.change>0,isDown=row.change<0;
+      const bg=isUp?'rgba(21,128,61,0.13)':isDown?'rgba(185,28,28,0.11)':'transparent';
+      const tc=isUp?'#15803d':isDown?'#b91c1c':'var(--ink3)';
+      const arrow=isUp?'↑':isDown?'↓':'→';
+      const bord=m===selM?`outline:2px solid ${color};outline-offset:-2px;`:'';
+      html+=`<td style="background:${bg};color:${tc};${bord}" title="${row.label}: ${row.change>=0?'+':''}${row.change?.toLocaleString(undefined,{maximumFractionDigits:1})}">${arrow} ${row.change>=0?'+':''}${row.change.toLocaleString(undefined,{maximumFractionDigits:0})}<br><span style="font-size:9px;opacity:0.7">${row.pct!=null?(row.pct>=0?'+':'')+row.pct.toFixed(1)+'%':''}</span></td>`;
     }
-    html += '</tr>';
+    html+='</tr>';
   });
-
-  // Average row
-  html += '<tr class="avg-row"><td class="yr-lbl" style="color:#fff">AVG</td>';
+  html+='<tr class="avg-row"><td class="yr-lbl" style="color:#fff">AVG</td>';
   for(let m=0;m<12;m++){
-    const avg = avgByMonth[m];
-    if(avg===null){ html += `<td style="color:var(--ink3)">—</td>`; continue; }
-    const isUp   = avg>0, isDown = avg<0;
-    const bg     = isUp  ? 'rgba(21,128,61,0.22)' : isDown ? 'rgba(185,28,28,0.18)' : 'transparent';
-    const tc     = isUp  ? '#15803d' : isDown ? '#b91c1c' : 'var(--ink3)';
-    const arrow  = isUp  ? '↑' : isDown ? '↓' : '→';
-    const isSelM = m===selM;
-    const bord   = isSelM ? `outline:2px solid ${color};outline-offset:-2px;` : '';
-    html += `<td style="background:${bg};color:${tc};${bord}">${arrow} ${avg>=0?'+':''}${avg.toLocaleString(undefined,{maximumFractionDigits:0})}</td>`;
+    const avg=avgByMonth[m];if(avg===null){html+=`<td style="color:var(--ink3)">—</td>`;continue;}
+    const isUp=avg>0,isDown=avg<0;
+    html+=`<td style="background:${isUp?'rgba(21,128,61,0.22)':isDown?'rgba(185,28,28,0.18)':'transparent'};color:${isUp?'#15803d':isDown?'#b91c1c':'var(--ink3)'};${m===selM?`outline:2px solid ${color};outline-offset:-2px;`:''}">${isUp?'↑':isDown?'↓':'→'} ${avg>=0?'+':''}${avg.toLocaleString(undefined,{maximumFractionDigits:0})}</td>`;
   }
-  html += '</tr></tbody>';
-  document.getElementById('seasonTbl').innerHTML = html;
+  html+='</tr></tbody>';
+  document.getElementById('seasonTbl').innerHTML=html;
 
-  // ──────────────────────────────────────────────────────────────────────
-  // YEAR-OVER-YEAR TABLE (cell = value(y,m) vs value(y-1,m))
-  // ──────────────────────────────────────────────────────────────────────
-  // Build a (year, month) → value lookup so we can find any prior-year cell
-  const valLookup = {};
-  tl.forEach(r => {
-    if(r.year !== null && r.month !== null) {
-      valLookup[r.year + '-' + r.month] = r.value;
+  // YoY table
+  const valLookup={};tl.forEach(r=>{if(r.year!==null&&r.month!==null)valLookup[r.year+'-'+r.month]=r.value;});
+  const yoyByYear={};
+  years.forEach(yr=>{yoyByYear[yr]={};for(let m=0;m<12;m++){const v=valLookup[yr+'-'+m],vPrev=valLookup[(yr-1)+'-'+m];if(v===undefined||vPrev===undefined){yoyByYear[yr][m]=null;}else{const change=v-vPrev,pct=vPrev!==0?(v/vPrev-1)*100:null;yoyByYear[yr][m]={value:v,prevValue:vPrev,change,pct};}}});
+  const avgYoYByMonth=Array.from({length:12},(_,m)=>{const vals=years.filter(yr=>selYr===null||yr===selYr).map(yr=>yoyByYear[yr][m]).filter(c=>c!==null);if(!vals.length)return null;return vals.reduce((s,c)=>s+c.change,0)/vals.length;});
+  document.getElementById('yoyTblTitle').textContent=`Year-over-Year Change — ${seriesNames[si]} (${MONTH_FULL[selM]} & each month vs same month one year earlier)${selYr?' · '+selYr:''}`;
+  let yoyHtml='<thead><tr><th>Year</th>';
+  MONTH_NAMES.forEach((mn,mi)=>{yoyHtml+=`<th class="${mi===selM?' active-month':''}">${mn}</th>`;});
+  yoyHtml+='</tr></thead><tbody>';
+  years.forEach(yr=>{
+    const isSelYear=selYr!==null&&yr===selYr,isDimmed=selYr!==null&&yr!==selYr;
+    yoyHtml+=`<tr style="${isDimmed?'opacity:0.35;':''}"><td class="yr-lbl" style="${isSelYear?`background:${color}!important;color:#fff;`:''}">${yr}</td>`;
+    for(let m=0;m<12;m++){
+      const c=yoyByYear[yr][m];
+      if(!c){yoyHtml+=`<td style="color:var(--ink3)">—</td>`;continue;}
+      const isUp=c.change>0,isDown=c.change<0;
+      const bg=isUp?'rgba(21,128,61,0.13)':isDown?'rgba(185,28,28,0.11)':'transparent';
+      const tc=isUp?'#15803d':isDown?'#b91c1c':'var(--ink3)';
+      const bord=m===selM?`outline:2px solid ${color};outline-offset:-2px;`:'';
+      yoyHtml+=`<td style="background:${bg};color:${tc};${bord}" title="${MONTH_NAMES[m]+'-'+yr} (${c.value.toLocaleString(undefined,{maximumFractionDigits:1})}) vs ${MONTH_NAMES[m]+'-'+(yr-1)} (${c.prevValue.toLocaleString(undefined,{maximumFractionDigits:1})})">${isUp?'↑':isDown?'↓':'→'} ${c.change>=0?'+':''}${c.change.toLocaleString(undefined,{maximumFractionDigits:0})}<br><span style="font-size:9px;opacity:0.7">${c.pct!=null?(c.pct>=0?'+':'')+c.pct.toFixed(1)+'%':''}</span></td>`;
     }
+    yoyHtml+='</tr>';
   });
-
-  // For each (year, month), compute YoY change vs value(year-1, month)
-  const yoyByYear = {}; // {year: {month: {change, pct, value, prevValue}}}
-  years.forEach(yr => {
-    yoyByYear[yr] = {};
-    for(let m = 0; m < 12; m++) {
-      const v     = valLookup[yr + '-' + m];
-      const vPrev = valLookup[(yr-1) + '-' + m];
-      if(v === undefined || vPrev === undefined) {
-        yoyByYear[yr][m] = null;
-      } else {
-        const change = v - vPrev;
-        const pct    = vPrev !== 0 ? (v / vPrev - 1) * 100 : null;
-        yoyByYear[yr][m] = { value: v, prevValue: vPrev, change, pct };
-      }
-    }
-  });
-
-  // Average YoY change per month across all years (or selected year)
-  const avgYoYByMonth = Array.from({length:12}, (_, m) => {
-    const vals = years
-      .filter(yr => selYr === null || yr === selYr)
-      .map(yr => yoyByYear[yr][m])
-      .filter(c => c !== null);
-    if(!vals.length) return null;
-    return vals.reduce((s,c) => s + c.change, 0) / vals.length;
-  });
-
-  document.getElementById('yoyTblTitle').textContent =
-    `Year-over-Year Change — ${seriesNames[si]} (${MONTH_FULL[selM]} & each month vs same month one year earlier)${selYr?' · '+selYr:''}`;
-
-  let yoyHtml = '<thead><tr><th>Year</th>';
-  MONTH_NAMES.forEach((mn, mi) => {
-    const act = mi === selM ? ' active-month' : '';
-    yoyHtml += `<th class="${act}">${mn}</th>`;
-  });
-  yoyHtml += '</tr></thead><tbody>';
-
-  years.forEach(yr => {
-    const isSelYear = selYr !== null && yr === selYr;
-    const isDimmed  = selYr !== null && yr !== selYr;
-    const rowStyle  = isDimmed ? 'opacity:0.35;' : '';
-    const yrStyle   = isSelYear ? `background:${color}!important;color:#fff;` : '';
-
-    yoyHtml += `<tr style="${rowStyle}"><td class="yr-lbl" style="${yrStyle}">${yr}</td>`;
-    for(let m = 0; m < 12; m++) {
-      const c = yoyByYear[yr][m];
-      if(!c) {
-        yoyHtml += `<td style="color:var(--ink3)">—</td>`;
-      } else {
-        const isUp   = c.change > 0;
-        const isDown = c.change < 0;
-        const bg     = isUp  ? 'rgba(21,128,61,0.13)' :
-                       isDown? 'rgba(185,28,28,0.11)' : 'transparent';
-        const tc     = isUp  ? '#15803d' : isDown ? '#b91c1c' : 'var(--ink3)';
-        const arrow  = isUp  ? '↑' : isDown ? '↓' : '→';
-        const isSelM = m === selM;
-        const bord   = isSelM ? `outline:2px solid ${color};outline-offset:-2px;` : '';
-        const monthLbl = MONTH_NAMES[m] + '-' + yr;
-        const prevLbl  = MONTH_NAMES[m] + '-' + (yr-1);
-        yoyHtml += `<td style="background:${bg};color:${tc};${bord}" title="${monthLbl} (${c.value.toLocaleString(undefined,{maximumFractionDigits:1})}) vs ${prevLbl} (${c.prevValue.toLocaleString(undefined,{maximumFractionDigits:1})})">
-          ${arrow} ${c.change>=0?'+':''}${c.change.toLocaleString(undefined,{maximumFractionDigits:0})}
-          <br><span style="font-size:9px;opacity:0.7">${c.pct!=null?(c.pct>=0?'+':'')+c.pct.toFixed(1)+'%':''}</span>
-        </td>`;
-      }
-    }
-    yoyHtml += '</tr>';
-  });
-
-  // Average YoY row
-  yoyHtml += '<tr class="avg-row"><td class="yr-lbl" style="color:#fff">AVG</td>';
-  for(let m = 0; m < 12; m++) {
-    const avg = avgYoYByMonth[m];
-    if(avg === null) { yoyHtml += `<td style="color:var(--ink3)">—</td>`; continue; }
-    const isUp   = avg > 0, isDown = avg < 0;
-    const bg     = isUp  ? 'rgba(21,128,61,0.22)' : isDown ? 'rgba(185,28,28,0.18)' : 'transparent';
-    const tc     = isUp  ? '#15803d' : isDown ? '#b91c1c' : 'var(--ink3)';
-    const arrow  = isUp  ? '↑' : isDown ? '↓' : '→';
-    const isSelM = m === selM;
-    const bord   = isSelM ? `outline:2px solid ${color};outline-offset:-2px;` : '';
-    yoyHtml += `<td style="background:${bg};color:${tc};${bord}">${arrow} ${avg>=0?'+':''}${avg.toLocaleString(undefined,{maximumFractionDigits:0})}</td>`;
+  yoyHtml+='<tr class="avg-row"><td class="yr-lbl" style="color:#fff">AVG</td>';
+  for(let m=0;m<12;m++){
+    const avg=avgYoYByMonth[m];if(avg===null){yoyHtml+=`<td style="color:var(--ink3)">—</td>`;continue;}
+    const isUp=avg>0,isDown=avg<0;
+    yoyHtml+=`<td style="background:${isUp?'rgba(21,128,61,0.22)':isDown?'rgba(185,28,28,0.18)':'transparent'};color:${isUp?'#15803d':isDown?'#b91c1c':'var(--ink3)'};${m===selM?`outline:2px solid ${color};outline-offset:-2px;`:''}">${isUp?'↑':isDown?'↓':'→'} ${avg>=0?'+':''}${avg.toLocaleString(undefined,{maximumFractionDigits:0})}</td>`;
   }
-  yoyHtml += '</tr></tbody>';
-  document.getElementById('yoyTbl').innerHTML = yoyHtml;
+  yoyHtml+='</tr></tbody>';
+  document.getElementById('yoyTbl').innerHTML=yoyHtml;
 }
 
-// ── 3. TIME CHART (with secondary axis) ──────────────────────────────────────
-let axisAssignment = []; // 'left' | 'right' per series index
-
-function autoDetectAxes() {
-  // Compute mean per series, then check if ratio between max and min mean > 3
-  const means = seriesData.map(d => d.reduce((a,b)=>a+b,0)/d.length);
-  const maxM   = Math.max(...means);
-  const minM   = Math.min(...means);
-  const ratio  = minM > 0 ? maxM / minM : 99;
-
-  if(ratio > 3) {
-    // Cluster: series with mean < median(means)*1.5 → left, others → right
-    const sorted = [...means].sort((a,b)=>a-b);
-    const median = sorted[Math.floor(sorted.length/2)];
-    axisAssignment = means.map(m => m < median * 1.8 ? 'left' : 'right');
-    // make sure at least 1 on each side
-    if(axisAssignment.every(a=>a==='left'))  axisAssignment[axisAssignment.length-1]='right';
-    if(axisAssignment.every(a=>a==='right')) axisAssignment[0]='left';
-    document.getElementById('autoWarn').style.display = 'inline-block';
+let axisAssignment=[];
+function autoDetectAxes(){
+  const means=seriesData.map(d=>d.reduce((a,b)=>a+b,0)/d.length);
+  const maxM=Math.max(...means),minM=Math.min(...means),ratio=minM>0?maxM/minM:99;
+  if(ratio>3){
+    const sorted=[...means].sort((a,b)=>a-b),median=sorted[Math.floor(sorted.length/2)];
+    axisAssignment=means.map(m=>m<median*1.8?'left':'right');
+    if(axisAssignment.every(a=>a==='left'))axisAssignment[axisAssignment.length-1]='right';
+    if(axisAssignment.every(a=>a==='right'))axisAssignment[0]='left';
+    document.getElementById('autoWarn').style.display='inline-block';
   } else {
-    axisAssignment = seriesData.map(()=>'left');
-    document.getElementById('autoWarn').style.display = 'none';
+    axisAssignment=seriesData.map(()=>'left');
+    document.getElementById('autoWarn').style.display='none';
   }
 }
 
-function buildAxisToggleBar() {
-  const bar = document.getElementById('axisToggleBar');
-  // Remove old buttons (keep label and warn span)
+function buildAxisToggleBar(){
+  const bar=document.getElementById('axisToggleBar');
   bar.querySelectorAll('.axis-btn').forEach(b=>b.remove());
-
   seriesNames.forEach((name,i)=>{
-    const isRight = axisAssignment[i] === 'right';
-    const btn = document.createElement('div');
-    btn.className = 'axis-btn' + (isRight ? ' on-right' : '');
-    btn.style.borderColor = isRight ? PALETTE[i] : '';
-    btn.style.background  = isRight ? PALETTE[i] : '';
-    btn.innerHTML = `
-      <div class="ab-dot" style="background:${isRight?'rgba(255,255,255,0.85)':PALETTE[i]}"></div>
-      <span>${name.length>16?name.substring(0,15)+'…':name}</span>
-      <span class="ab-axis-tag ${isRight?'right':'left'}">${isRight?'R':'L'}</span>
-    `;
-    btn.title = `Click to move "${name}" to ${isRight?'left':'right'} axis`;
-    btn.addEventListener('click', ()=>{
-      axisAssignment[i] = isRight ? 'left' : 'right';
-      // ensure both axes have at least 1 series
-      if(axisAssignment.every(a=>a==='right')) axisAssignment[i]='left';
-      if(axisAssignment.every(a=>a==='left'))  axisAssignment[i]='right';
-      buildAxisToggleBar();
-      renderTimeChart();
+    const isRight=axisAssignment[i]==='right';
+    const btn=document.createElement('div');
+    btn.className='axis-btn'+(isRight?' on-right':'');
+    btn.style.borderColor=isRight?PALETTE[i]:'';btn.style.background=isRight?PALETTE[i]:'';
+    btn.innerHTML=`<div class="ab-dot" style="background:${isRight?'rgba(255,255,255,0.85)':PALETTE[i]}"></div><span>${name.length>16?name.substring(0,15)+'…':name}</span><span class="ab-axis-tag ${isRight?'right':'left'}">${isRight?'R':'L'}</span>`;
+    btn.title=`Click to move "${name}" to ${isRight?'left':'right'} axis`;
+    btn.addEventListener('click',()=>{
+      axisAssignment[i]=isRight?'left':'right';
+      if(axisAssignment.every(a=>a==='right'))axisAssignment[i]='left';
+      if(axisAssignment.every(a=>a==='left'))axisAssignment[i]='right';
+      buildAxisToggleBar();renderTimeChart();
     });
-    // Insert before autoWarn
-    bar.insertBefore(btn, document.getElementById('autoWarn'));
+    bar.insertBefore(btn,document.getElementById('autoWarn'));
   });
 }
 
-function renderTimeChart() {
-  if(timeChartInst) timeChartInst.destroy();
-
-  const hasRight = axisAssignment.some(a=>a==='right');
-
-  const datasets = seriesNames.map((n,i)=>({
-    label: n,
-    data: seriesData[i],
-    borderColor: PALETTE[i],
-    backgroundColor: 'transparent',
-    borderWidth: 2,
-    pointRadius: 0,
-    tension: 0.35,
-    yAxisID: axisAssignment[i] === 'right' ? 'yRight' : 'yLeft',
-  }));
-
-  const scalesConfig = {
-    x: {
-      ticks: { color:'#a09880', font:{size:9}, maxTicksLimit:16 },
-      grid:  { color:'#e0dace' }
-    },
-    yLeft: {
-      type: 'linear',
-      position: 'left',
-      ticks: { color:'#a09880', font:{size:9} },
-      grid:  { color:'#e0dace' },
-      title: { display: hasRight, text:'Left Axis', color:'#a09880', font:{size:10} }
-    },
-  };
-
-  if(hasRight) {
-    // Find a right-axis series colour for the right axis label
-    const firstRight = axisAssignment.findIndex(a=>a==='right');
-    scalesConfig.yRight = {
-      type: 'linear',
-      position: 'right',
-      ticks: { color: PALETTE[firstRight] || '#a09880', font:{size:9} },
-      grid:  { drawOnChartArea: false },
-      title: { display: true, text:'Right Axis', color: PALETTE[firstRight] || '#a09880', font:{size:10} }
-    };
-  }
-
-  timeChartInst = new Chart(document.getElementById('timeChart'), {
-    type: 'line',
-    data: { labels: dateLabels, datasets },
-    options: {
-      responsive: true,
-      interaction: { mode:'index', intersect:false },
-      plugins: {
-        legend: {
-          labels: { color:'#6b6355', font:{family:'Outfit',size:11}, boxWidth:14 },
-          onClick(e, legendItem, legend) {
-            // default toggle visibility
-            const ci = legendItem.datasetIndex;
-            const meta = legend.chart.getDatasetMeta(ci);
-            meta.hidden = meta.hidden === null ? !legend.chart.data.datasets[ci].hidden : null;
-            legend.chart.update();
-          }
-        }
-      },
-      scales: scalesConfig
-    }
-  });
+function renderTimeChart(){
+  if(timeChartInst)timeChartInst.destroy();
+  const hasRight=axisAssignment.some(a=>a==='right');
+  const datasets=seriesNames.map((n,i)=>({label:n,data:seriesData[i],borderColor:PALETTE[i],backgroundColor:'transparent',borderWidth:2,pointRadius:0,tension:0.35,yAxisID:axisAssignment[i]==='right'?'yRight':'yLeft'}));
+  const scalesConfig={x:{ticks:{color:'#a09880',font:{size:9},maxTicksLimit:16},grid:{color:'#e0dace'}},yLeft:{type:'linear',position:'left',ticks:{color:'#a09880',font:{size:9}},grid:{color:'#e0dace'},title:{display:hasRight,text:'Left Axis',color:'#a09880',font:{size:10}}}};
+  if(hasRight){const firstRight=axisAssignment.findIndex(a=>a==='right');scalesConfig.yRight={type:'linear',position:'right',ticks:{color:PALETTE[firstRight]||'#a09880',font:{size:9}},grid:{drawOnChartArea:false},title:{display:true,text:'Right Axis',color:PALETTE[firstRight]||'#a09880',font:{size:10}}};}
+  timeChartInst=new Chart(document.getElementById('timeChart'),{type:'line',data:{labels:dateLabels,datasets},options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{labels:{color:'#6b6355',font:{family:'Outfit',size:11},boxWidth:14},onClick(e,legendItem,legend){const ci=legendItem.datasetIndex;const meta=legend.chart.getDatasetMeta(ci);meta.hidden=meta.hidden===null?!legend.chart.data.datasets[ci].hidden:null;legend.chart.update();}}},scales:scalesConfig}});
 }
 
-// ── 4. MATRIX ─────────────────────────────────────────────────────────────────
-function renderMatrix() {
-  const tbl  = document.getElementById('corrTable');
-  const N    = seriesNames.length;
-  const short = seriesNames.map(n => n.length>14 ? n.substring(0,13)+'…' : n);
-
-  let html = '<thead><tr><th></th>';
-  short.forEach(n => html += `<th>${n}</th>`);
-  html += '</tr></thead><tbody>';
-
+function renderMatrix(){
+  const tbl=document.getElementById('corrTable'),N=seriesNames.length;
+  const short=seriesNames.map(n=>n.length>14?n.substring(0,13)+'…':n);
+  let html='<thead><tr><th></th>';short.forEach(n=>html+=`<th>${n}</th>`);html+='</tr></thead><tbody>';
   corrMatrix.forEach((row,i)=>{
-    html += `<tr><td class="row-lbl">${short[i]}</td>`;
-    row.forEach((v,j)=>{
-      const bg = corrColor(v);
-      const tc = textOnCorr(v);
-      const diag = i===j ? 'opacity:0.55;' : '';
-      html += `<td style="background:${bg};color:${tc};${diag}" title="${seriesNames[i]} vs ${seriesNames[j]}: ${v.toFixed(4)}">${v.toFixed(3)}</td>`;
-    });
-    html += '</tr>';
+    html+=`<tr><td class="row-lbl">${short[i]}</td>`;
+    row.forEach((v,j)=>{html+=`<td style="background:${corrColor(v)};color:${textOnCorr(v)};${i===j?'opacity:0.55;':''}" title="${seriesNames[i]} vs ${seriesNames[j]}: ${v.toFixed(4)}">${v.toFixed(3)}</td>`;});
+    html+='</tr>';
   });
-  html += '</tbody>';
-  tbl.innerHTML = html;
+  html+='</tbody>';tbl.innerHTML=html;
 }
 
-// ── 5. BEST PAIRS ─────────────────────────────────────────────────────────────
-function renderBestPairs() {
-  const grid = document.getElementById('pairsGrid');
-  const N    = seriesNames.length;
-
-  grid.innerHTML = seriesNames.map((name,i)=>{
-    const ranked = corrMatrix[i]
-      .map((r,j)=>({j,r}))
-      .filter(x=>x.j!==i)
-      .sort((a,b)=>b.r-a.r);
-    const best   = ranked[0];
-    const second = ranked[1];
-    const bd = badge(best.r);
-    const ac = PALETTE[i];
-    const bc = PALETTE[best.j];
-
-    return `<div class="pair-card">
-      <div class="pc-badge" style="background:${bd.bg};color:${bd.tc}">${bd.label}</div>
-      <div class="pc-grade">${name}</div>
-      <div class="pc-arrow">▼ best correlated with</div>
-      <div class="pc-match" style="color:${bc}">${seriesNames[best.j]}</div>
-      <div class="pc-r" style="color:${ac}">${best.r.toFixed(4)}</div>
-      <div class="pc-label">Pearson r</div>
-      <div class="pc-bar-bg"><div class="pc-bar" style="width:${Math.max(0,best.r)*100}%;background:${ac}"></div></div>
-      <div class="pc-second">2nd best: <b style="color:${PALETTE[second.j]}">${seriesNames[second.j]}</b> &nbsp;r = ${second.r.toFixed(4)}</div>
-      <div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:${ac}"></div>
-    </div>`;
+function renderBestPairs(){
+  document.getElementById('pairsGrid').innerHTML=seriesNames.map((name,i)=>{
+    const ranked=corrMatrix[i].map((r,j)=>({j,r})).filter(x=>x.j!==i).sort((a,b)=>b.r-a.r);
+    const best=ranked[0],second=ranked[1],bd=badge(best.r),ac=PALETTE[i],bc=PALETTE[best.j];
+    return`<div class="pair-card"><div class="pc-badge" style="background:${bd.bg};color:${bd.tc}">${bd.label}</div><div class="pc-grade">${name}</div><div class="pc-arrow">▼ best correlated with</div><div class="pc-match" style="color:${bc}">${seriesNames[best.j]}</div><div class="pc-r" style="color:${ac}">${best.r.toFixed(4)}</div><div class="pc-label">Pearson r</div><div class="pc-bar-bg"><div class="pc-bar" style="width:${Math.max(0,best.r)*100}%;background:${ac}"></div></div><div class="pc-second">2nd best: <b style="color:${PALETTE[second.j]}">${seriesNames[second.j]}</b> &nbsp;r = ${second.r.toFixed(4)}</div><div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:${ac}"></div></div>`;
   }).join('');
 }
 
-// ── 6. SCATTER ────────────────────────────────────────────────────────────────
-function buildSelects() {
-  const xSel = document.getElementById('xSel');
-  const ySel = document.getElementById('ySel');
-  xSel.innerHTML = seriesNames.map((n,i)=>`<option value="${i}">${n}</option>`).join('');
-  ySel.innerHTML = seriesNames.map((n,i)=>`<option value="${i}">${n}</option>`).join('');
-  if(seriesNames.length>1) ySel.value = 1;
-  xSel.onchange = renderScatter;
-  ySel.onchange = renderScatter;
+function buildSelects(){
+  const xSel=document.getElementById('xSel'),ySel=document.getElementById('ySel');
+  xSel.innerHTML=seriesNames.map((n,i)=>`<option value="${i}">${n}</option>`).join('');
+  ySel.innerHTML=seriesNames.map((n,i)=>`<option value="${i}">${n}</option>`).join('');
+  if(seriesNames.length>1)ySel.value=1;
+  xSel.onchange=renderScatter;ySel.onchange=renderScatter;
 }
 
-function renderScatter() {
-  const xi = +document.getElementById('xSel').value;
-  const yi = +document.getElementById('ySel').value;
-  const r  = corrMatrix[xi][yi];
-
-  const rDiv = document.getElementById('liveR');
-  rDiv.style.color = r>=0.9?'#15803d': r>=0.7?'#2563eb': r>=0.5?'#ca8a04':'#b91c1c';
-  rDiv.innerHTML = `r = ${r.toFixed(4)}<small>Pearson Correlation</small>`;
-
-  const pts = seriesData[xi].map((v,k)=>({x:v, y:seriesData[yi][k], label:dateLabels[k]}));
-
-  if(scatterChartInst) scatterChartInst.destroy();
-  scatterChartInst = new Chart(document.getElementById('scatterChart'),{
-    type: 'scatter',
-    data: {
-      datasets:[{
-        label: `${seriesNames[xi]} vs ${seriesNames[yi]}`,
-        data: pts,
-        backgroundColor: pts.map((_,k)=>`hsla(${k*(180/pts.length)},65%,50%,0.75)`),
-        pointRadius: 5,
-        pointHoverRadius: 8,
-      }]
-    },
-    options:{
-      responsive:true,
-      plugins:{
-        tooltip:{ callbacks:{ label: ctx=>`${ctx.raw.label}: (${ctx.raw.x.toLocaleString()}, ${ctx.raw.y.toLocaleString()})` } },
-        legend:{ labels:{ color:'#6b6355', font:{family:'Outfit',size:11} } }
-      },
-      scales:{
-        x:{ title:{display:true,text:seriesNames[xi],color:'#a09880',font:{family:'Outfit',size:11}}, ticks:{color:'#a09880'}, grid:{color:'#e0dace'} },
-        y:{ title:{display:true,text:seriesNames[yi],color:'#a09880',font:{family:'Outfit',size:11}}, ticks:{color:'#a09880'}, grid:{color:'#e0dace'} }
-      }
-    }
-  });
+function renderScatter(){
+  const xi=+document.getElementById('xSel').value,yi=+document.getElementById('ySel').value;
+  const r=corrMatrix[xi][yi];
+  const rDiv=document.getElementById('liveR');
+  rDiv.style.color=r>=0.9?'#15803d':r>=0.7?'#2563eb':r>=0.5?'#ca8a04':'#b91c1c';
+  rDiv.innerHTML=`r = ${r.toFixed(4)}<small>Pearson Correlation</small>`;
+  const pts=seriesData[xi].map((v,k)=>({x:v,y:seriesData[yi][k],label:dateLabels[k]}));
+  if(scatterChartInst)scatterChartInst.destroy();
+  scatterChartInst=new Chart(document.getElementById('scatterChart'),{type:'scatter',data:{datasets:[{label:`${seriesNames[xi]} vs ${seriesNames[yi]}`,data:pts,backgroundColor:pts.map((_,k)=>`hsla(${k*(180/pts.length)},65%,50%,0.75)`),pointRadius:5,pointHoverRadius:8}]},options:{responsive:true,plugins:{tooltip:{callbacks:{label:ctx=>`${ctx.raw.label}: (${ctx.raw.x.toLocaleString()}, ${ctx.raw.y.toLocaleString()})`}},legend:{labels:{color:'#6b6355',font:{family:'Outfit',size:11}}}},scales:{x:{title:{display:true,text:seriesNames[xi],color:'#a09880',font:{family:'Outfit',size:11}},ticks:{color:'#a09880'},grid:{color:'#e0dace'}},y:{title:{display:true,text:seriesNames[yi],color:'#a09880',font:{family:'Outfit',size:11}},ticks:{color:'#a09880'},grid:{color:'#e0dace'}}}}});
 }
 </script>
 </body>
 </html>
+
+
