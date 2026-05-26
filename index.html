@@ -919,6 +919,7 @@ function renderSeasonality(){
   const selYr=selYrRaw==='all'?null:parseInt(selYrRaw);
   const color=PALETTE[si],tl=buildSeriesTimeline(si);
   const monthRows=tl.filter(r=>r.month===selM&&r.change!==null&&(selYr===null||r.year===selYr));
+  const allMonthRows=tl.filter(r=>r.month===selM&&r.value!==undefined&&r.value!==null&&(selYr===null||r.year===selYr));
   const inc=monthRows.filter(r=>r.change>0),dec=monthRows.filter(r=>r.change<0),flat=monthRows.filter(r=>r.change===0);
   const avgInc=inc.length?inc.reduce((s,r)=>s+r.change,0)/inc.length:0;
   const avgDec=dec.length?dec.reduce((s,r)=>s+r.change,0)/dec.length:0;
@@ -927,14 +928,13 @@ function renderSeasonality(){
   const medianVal=modeVals.length?computeMedian(modeVals):null;
   const yearLabel=selYr?selYr:'All Years';
   document.getElementById('seasonKpis').innerHTML=`
-    <div class="kpi-card kpi-up"><div class="kpi-label">↑ ${MONTH_FULL[selM]} Increases</div><div class="kpi-val" style="color:#15803d">${inc.length}</div><div class="kpi-sub">out of ${monthRows.length} obs · ${yearLabel}</div></div>
+    <div class="kpi-card kpi-up"><div class="kpi-label">↑ ${MONTH_FULL[selM]} Increases</div><div class="kpi-val" style="color:#15803d">${inc.length}</div><div class="kpi-sub">out of ${allMonthRows.length} obs · ${yearLabel}</div></div>
     <div class="kpi-card kpi-up"><div class="kpi-label">Avg Increase Amount</div><div class="kpi-val" style="color:#15803d">${inc.length?'+'+avgInc.toLocaleString(undefined,{maximumFractionDigits:1}):'—'}</div><div class="kpi-sub">when price rose</div></div>
-    <div class="kpi-card kpi-down"><div class="kpi-label">↓ ${MONTH_FULL[selM]} Decreases</div><div class="kpi-val" style="color:#b91c1c">${dec.length}</div><div class="kpi-sub">out of ${monthRows.length} obs · ${yearLabel}</div></div>
+    <div class="kpi-card kpi-down"><div class="kpi-label">↓ ${MONTH_FULL[selM]} Decreases</div><div class="kpi-val" style="color:#b91c1c">${dec.length}</div><div class="kpi-sub">out of ${allMonthRows.length} obs · ${yearLabel}</div></div>
     <div class="kpi-card kpi-down"><div class="kpi-label">Avg Decrease Amount</div><div class="kpi-val" style="color:#b91c1c">${dec.length?avgDec.toLocaleString(undefined,{maximumFractionDigits:1}):'—'}</div><div class="kpi-sub">when price fell</div></div>
     <div class="kpi-card kpi-neu"><div class="kpi-label">Flat Months</div><div class="kpi-val" style="color:var(--gold)">${flat.length}</div><div class="kpi-sub">no change · ${yearLabel}</div></div>
     <div class="kpi-card kpi-neu"><div class="kpi-label">Avg % Change</div><div class="kpi-val" style="color:${avgPct>=0?'#15803d':'#b91c1c'}">${avgPct>=0?'+':''}${avgPct.toFixed(1)}%</div><div class="kpi-sub">across ${MONTH_FULL[selM]}s</div></div>
-    <div class="kpi-card kpi-mode"><div class="kpi-label">Median (${MONTH_FULL[selM]})</div><div class="kpi-val" style="color:var(--accent2)">${medianVal!==null?medianVal.toLocaleString(undefined,{maximumFractionDigits:1}):'—'}</div><div class="kpi-sub">${yearLabel}</div></div>
-    <div class="kpi-card kpi-mode"><div class="kpi-label">Bullish Probability</div><div class="kpi-val" style="color:var(--accent2)">${monthRows.length?Math.round(inc.length/monthRows.length*100)+'%':'—'}</div><div class="kpi-sub">${MONTH_FULL[selM]} tends to rise</div></div>`;
+    <div class="kpi-card kpi-mode"><div class="kpi-label">Median (${MONTH_FULL[selM]})</div><div class="kpi-val" style="color:var(--accent2)">${medianVal!==null?medianVal.toLocaleString(undefined,{maximumFractionDigits:1}):'—'}</div><div class="kpi-sub">${yearLabel}</div></div>`;
   document.getElementById('seasonTblTitle').textContent=`Monthly Seasonality — ${seriesNames[si]} (MoM Change)${selYr?' · '+selYr:''}`;
   const byYearFull={};
   tl.forEach(r=>{if(r.year===null)return;if(!byYearFull[r.year])byYearFull[r.year]={};byYearFull[r.year][r.month]=r;});
